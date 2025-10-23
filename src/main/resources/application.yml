@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: security-review
+  datasource:
+    url: jdbc:mysql://localhost/security
+    password: sec
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+logging:
+  level:
+    root: info
+    web: error
+    com.pacifique.security.review.controller: debug
+
+resend:
+  api-key: re_JHiDH6vZ_GjAdbf3YP8WJmBxkua1N8um4
+  api-url: https://api.resend.com/emails
+  from: dev@commitlink.org
+  subject: Welcome to Security Review App
+security:
+  jwt:
+    secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+    expiration: 86400000
+    refresh-token:
+      expiration: 604800000
+    super-admin: c3VwZXJBZG1pbnBlcm1pc3Npb25zdXBlckFkbWlucGVybWlzc2lvbnN1cGVyQWRtaW5wZXJtaXNz
