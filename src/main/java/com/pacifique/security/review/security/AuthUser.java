@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.pacifique.security.review.utils.PermissionConstants.PREFIX;
+import static com.pacifique.security.review.utils.ConstantsFields.PREFIX;
 
 @AllArgsConstructor
 @Builder

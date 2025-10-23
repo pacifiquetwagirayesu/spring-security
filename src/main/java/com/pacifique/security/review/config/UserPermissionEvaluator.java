@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 import java.util.Collection;
 
-import static com.pacifique.security.review.utils.PermissionConstants.PREFIX;
+import static com.pacifique.security.review.utils.ConstantsFields.PREFIX;
 
 @Component
 @RequiredArgsConstructor

@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Slf4j
-public class AppTypeConverter {
-    private AppTypeConverter() {
+public class TypeConverter {
+    private TypeConverter() {
     }
 
 

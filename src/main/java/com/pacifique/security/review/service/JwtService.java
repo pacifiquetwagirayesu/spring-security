@@ -1,6 +1,5 @@
 package com.pacifique.security.review.service;
 
-import com.pacifique.security.review.exception.InvalidToken;
 import com.pacifique.security.review.security.AuthUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -14,15 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.IOException;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-
-import static com.pacifique.security.review.utils.HttpFilterErrorMessage.generateResponse;
 
 @Configuration
 @Slf4j
@@ -62,7 +58,6 @@ public class JwtService implements IJwtService {
 
     public boolean isTokenValid(String token, AuthUser authUser) throws JwtException {
         String username = getUsername(token);
-        log.info("username: {}" , username);
         return username.equals(authUser.getUsername()) && !isTokenExpired(token);
     }
 
@@ -74,23 +69,12 @@ public class JwtService implements IJwtService {
     }
 
     private  Claims extractAllClaims(String token) throws JwtException {
-        try {
             return Jwts.parser()
                     .setSigningKey(getSignedKey())
                     .build()
                     .parseSignedClaims(token)
                     .getPayload();
-        } catch (JwtException e) {
-            log.info("Invalid JWT Token", e);
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            try {
-                generateResponse(response,request,e);
-            } catch (IOException ex) {
-                log.info("Invalid request: ", e);
-            }
-            throw new InvalidToken("Invalid JWT Token", e);
 
-        }
     }
 
     private Key getSignedKey() {
