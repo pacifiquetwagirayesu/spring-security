@@ -4,6 +4,7 @@ import com.pacifique.security.review.dto.ProductPaginationResponse;
 import com.pacifique.security.review.dto.ProductRequest;
 import com.pacifique.security.review.dto.ProductResponse;
 import com.pacifique.security.review.service.IProductService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 @RestController
+@Tag(name = "Product Controller",description = "Product related actions")
 public class ProductController {
     private final IProductService productService;
 

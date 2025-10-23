@@ -3,6 +3,7 @@ package com.pacifique.security.review.service;
 import com.pacifique.security.review.dto.UserLoginRequest;
 import com.pacifique.security.review.dto.UserLoginResponse;
 import com.pacifique.security.review.dto.UserResponse;
+import com.pacifique.security.review.exception.InvalidToken;
 import com.pacifique.security.review.exception.UserNotFound;
 import com.pacifique.security.review.model.Token;
 import com.pacifique.security.review.model.User;
@@ -21,8 +22,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static com.pacifique.security.review.utils.AppTypeConverter.convertUserResponse;
-import static com.pacifique.security.review.utils.AppTypeConverter.loginUserResponse;
+import static com.pacifique.security.review.utils.TypeConverter.convertUserResponse;
+import static com.pacifique.security.review.utils.TypeConverter.loginUserResponse;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -38,23 +39,28 @@ public class AuthUserService implements IAuthUserService {
 
     @Override
     public UserLoginResponse logInUser(UserLoginRequest req) {
-        Token tokenObj;
-
         AuthUser authUser = userDetailsService.loadUserByUsername(req.username());
-        Optional<Token> userToken = tokenRepository.findByUserId(authUser.getId());
+        Token userToken = tokenRepository.findByUserId(authUser.getId()).orElseThrow(()-> new InvalidToken("Invalid token"));
 
         if (!passwordEncoder.matches(req.password(), authUser.getPassword())) {
             throw new UserNotFound("Please check your username and password");
         }
 
-        if (userToken.isPresent()) {
-            tokenObj = userToken.get();
-            return loginUserResponse(authUser, tokenObj);
+        try {
+            if (jwtService.isTokenValid(userToken.getToken(), authUser)) {
+                return loginUserResponse(authUser, userToken);
+            }
+        } catch (Exception e) {
+            log.info("Authentication failed: {}", e.getMessage());
         }
+
+        log.info("deleted expired token");
+        tokenRepository.delete(userToken);
 
         log.info("loading a new token for user {}", authUser.getId());
         String token = jwtService.generateToken(authUser);
         String refreshToken = jwtService.generateRefreshToken(authUser);
+
 
         var savedToken = tokenRepository.save(Token.builder().userId(authUser
                 .getId()).token(token).refreshToken(refreshToken).build());

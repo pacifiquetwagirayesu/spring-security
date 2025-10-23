@@ -20,7 +20,7 @@ public interface IJwtService {
 
     String generateRefreshToken(AuthUser authUser);
 
-    boolean isTokenValid(String token, AuthUser authUser);
+    boolean isTokenValid(String token, AuthUser authUser) throws JwtException;
 
     String getUsername(String token);
 

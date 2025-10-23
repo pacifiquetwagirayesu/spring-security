@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-import static com.pacifique.security.review.utils.AppTypeConverter.convertUserResponse;
+import static com.pacifique.security.review.utils.TypeConverter.convertUserResponse;
 
 @RequiredArgsConstructor
 @Service

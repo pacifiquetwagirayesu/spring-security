@@ -3,6 +3,12 @@ package com.pacifique.security.review.controller;
 import com.pacifique.security.review.dto.UserRequest;
 import com.pacifique.security.review.dto.UserResponse;
 import com.pacifique.security.review.service.IUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @Slf4j
+@Tag(name = "User Controller",description = "Operations related to user")
 public class UserController {
     private final IUserService userService;
 
@@ -28,6 +35,10 @@ public class UserController {
      *
      * @return List of UserResponse
      */
+    @Operation(summary = "Get  Users",description = "Returns a list of users")
+    @ApiResponse(
+            responseCode = "200",description = "Users found",
+            content = @Content(schema = @Schema(implementation = UserResponse.class)))
     @GetMapping
     public Iterable<UserResponse> getAllUsers() {
         return userService.getAllUsers();
