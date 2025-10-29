@@ -1,5 +1,6 @@
 package com.pacifique.security.review.service;
 
+import com.pacifique.security.review.model.User;
 import com.pacifique.security.review.security.AuthUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -39,26 +40,26 @@ public class JwtService implements IJwtService {
 
 
     @Override
-    public String generateToken(AuthUser authUser) {
+    public String generateToken(AuthUser user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", authUser.getRole());
-        claims.put("authorities", authUser.getAuthorities());
-        return buildJwtToken(claims, authUser,this.expiration);
+        claims.put("role", user.getRole());
+        claims.put("authorities", user.getAuthorities());
+        return buildJwtToken(claims, user,this.expiration);
     }
 
     @Override
-    public String generateRefreshToken(AuthUser authUser) {
+    public String generateRefreshToken(AuthUser user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", authUser.getRole());
-        claims.put("authorities", authUser.getAuthorities());
-        return buildJwtToken(claims, authUser,this.refreshTokenExpiration);
+        claims.put("role", user.getRole());
+        claims.put("authorities",user.getPermissions() );
+        return buildJwtToken(claims, user,this.refreshTokenExpiration);
     }
 
 
 
-    public boolean isTokenValid(String token, AuthUser authUser) throws JwtException {
+    public boolean isTokenValid(String token, AuthUser user) throws JwtException {
         String username = getUsername(token);
-        return username.equals(authUser.getUsername()) && !isTokenExpired(token);
+        return username.equals(user.getUsername()) && !isTokenExpired(token);
     }
 
 
@@ -84,14 +85,14 @@ public class JwtService implements IJwtService {
 
     private String buildJwtToken(
             Map<String, Object> claims,
-            AuthUser authUser,
+            AuthUser user,
             long expiration
     ) {
 
         return Jwts.builder()
                 .claims(claims)
-                .subject(authUser.getUsername())
-                .issuer(authUser.getFirstName().concat(" ").concat(authUser.getLastName()))
+                .subject(user.getUsername())
+                .issuer(user.getFirstName().concat(" ").concat(user.getLastName()))
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSignedKey())

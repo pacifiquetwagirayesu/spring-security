@@ -7,14 +7,15 @@ import com.pacifique.security.review.model.Product;
 import com.pacifique.security.review.model.Token;
 import com.pacifique.security.review.model.User;
 import com.pacifique.security.review.security.AuthUser;
+import com.pacifique.security.review.service.IJwtService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.function.Function;
 
 @Slf4j
-public class TypeConverter {
-    private TypeConverter() {
+public class Utility {
+    private Utility() {
     }
 
 
@@ -42,13 +43,22 @@ public class TypeConverter {
         ));
     }
 
-    public static UserLoginResponse loginUserResponse(AuthUser authUser, Token tokenObj) {
+    public static UserLoginResponse loginUserResponse(AuthUser user, Token tokenObj) {
         return new UserLoginResponse(
-                authUser.getId(),
-                authUser.getUsername(),
-                authUser.getFirstName(),
-                authUser.getLastName(),
+                user.getId(),
+                user.getUsername(),
+                user.getFirstName(),
+                user.getLastName(),
                 Map.of("accessToken", tokenObj.getToken(), "refreshToken", tokenObj.getRefreshToken()));
+    }
+
+    public static boolean validTokeHandler(String token,IJwtService jwtService, AuthUser authUser) {
+        try {
+            return jwtService.isTokenValid(token, authUser);
+        }catch (Exception e) {
+            log.error("validTokeHandler exception", e);
+        }
+        return false;
     }
 
 }

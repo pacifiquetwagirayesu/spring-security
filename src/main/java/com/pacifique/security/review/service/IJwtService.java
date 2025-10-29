@@ -1,5 +1,6 @@
 package com.pacifique.security.review.service;
 
+import com.pacifique.security.review.model.User;
 import com.pacifique.security.review.security.AuthUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -16,11 +17,11 @@ import java.util.function.Function;
 public interface IJwtService {
 
 
-    String generateToken(AuthUser authUser);
+    String generateToken(AuthUser user);
 
-    String generateRefreshToken(AuthUser authUser);
+    String generateRefreshToken(AuthUser user);
 
-    boolean isTokenValid(String token, AuthUser authUser) throws JwtException;
+    boolean isTokenValid(String token, AuthUser user) throws JwtException;
 
     String getUsername(String token);
 

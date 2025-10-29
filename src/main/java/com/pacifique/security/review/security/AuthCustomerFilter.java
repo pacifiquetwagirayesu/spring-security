@@ -22,13 +22,7 @@ public class AuthCustomerFilter implements AuthenticationEntryPoint {
         String header = request.getHeader("Authorization");
         int status = response.getStatus();
 
-        if (header == null || !header.startsWith("Bearer ")) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            generateResponse(response, request, new BadCredentialsException("Please login, Invalid username or password"));
-            return;
-        }
-
-        if (status == HttpServletResponse.SC_UNAUTHORIZED) {
+        if (status == HttpServletResponse.SC_UNAUTHORIZED || (header == null || !header.startsWith("Bearer "))) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             generateResponse(response, request, authException);
         } else if (status == HttpServletResponse.SC_FORBIDDEN) {

@@ -11,19 +11,18 @@ import com.pacifique.security.review.repository.ITokenRepository;
 import com.pacifique.security.review.repository.IUserRepository;
 import com.pacifique.security.review.security.AuthUser;
 import com.pacifique.security.review.security.UserDetailsServiceImpl;
+import com.pacifique.security.review.utils.Utility;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
-import static com.pacifique.security.review.utils.TypeConverter.convertUserResponse;
-import static com.pacifique.security.review.utils.TypeConverter.loginUserResponse;
+import static com.pacifique.security.review.utils.Utility.convertUserResponse;
+import static com.pacifique.security.review.utils.Utility.loginUserResponse;
+import static com.pacifique.security.review.utils.Utility.validTokeHandler;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,40 +32,36 @@ public class AuthUserService implements IAuthUserService {
 
     private final ITokenRepository tokenRepository;
     private final IUserRepository userRepository;
-    private final UserDetailsServiceImpl userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final IJwtService jwtService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Override
     public UserLoginResponse logInUser(UserLoginRequest req) {
-        AuthUser authUser = userDetailsService.loadUserByUsername(req.username());
-        Token userToken = tokenRepository.findByUserId(authUser.getId()).orElseThrow(()-> new InvalidToken("Invalid token"));
+        AuthUser au = (AuthUser) userDetailsService.loadUserByUsername(req.username());
 
-        if (!passwordEncoder.matches(req.password(), authUser.getPassword())) {
+        Token ut = tokenRepository.findByUserId(au.getId())
+                .orElseThrow(() -> new InvalidToken("Invalid token"));
+
+        if (!passwordEncoder.matches(req.password(), au.getPassword())) {
             throw new UserNotFound("Please check your username and password");
         }
 
-        try {
-            if (jwtService.isTokenValid(userToken.getToken(), authUser)) {
-                return loginUserResponse(authUser, userToken);
-            }
-        } catch (Exception e) {
-            log.info("Authentication failed: {}", e.getMessage());
-        }
+        if (validTokeHandler(ut.getToken(),jwtService, au)) return loginUserResponse(au, ut);
 
         log.info("deleted expired token");
-        tokenRepository.delete(userToken);
+        tokenRepository.delete(ut);
 
-        log.info("loading a new token for user {}", authUser.getId());
-        String token = jwtService.generateToken(authUser);
-        String refreshToken = jwtService.generateRefreshToken(authUser);
+        log.info("loading a new token for user {}", au.getId());
+        String token = jwtService.generateToken(au);
+        String refreshToken = jwtService.generateRefreshToken(au);
 
 
-        var savedToken = tokenRepository.save(Token.builder().userId(authUser
-                .getId()).token(token).refreshToken(refreshToken).build());
+        var savedToken = tokenRepository.save(Token.builder().userId(au.getId())
+                .token(token).refreshToken(refreshToken).build());
 
         log.info("Access Token loaded: {}", savedToken.getToken());
-        return loginUserResponse(authUser, savedToken);
+        return loginUserResponse(au, savedToken);
     }
 
 
@@ -75,7 +70,7 @@ public class AuthUserService implements IAuthUserService {
     public UserResponse loggedInUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(email).orElseThrow(()
-                -> new UsernameNotFoundException("User not found"));
+                -> new UserNotFound("User not found"));
         return convertUserResponse().apply(user);
     }
 }
