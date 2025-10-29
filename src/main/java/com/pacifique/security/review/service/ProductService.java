@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static com.pacifique.security.review.utils.TypeConverter.convertProductResponse;
+import static com.pacifique.security.review.utils.Utility.convertProductResponse;
 
 @Service
 @RequiredArgsConstructor

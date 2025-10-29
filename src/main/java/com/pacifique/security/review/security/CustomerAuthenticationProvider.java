@@ -23,7 +23,7 @@ public class CustomerAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String email = authentication.getPrincipal().toString();
         String password = authentication.getCredentials().toString();
-        AuthUser user = userDetailsService.loadUserByUsername(email);
+        AuthUser user = (AuthUser) userDetailsService.loadUserByUsername(email);
 
         if (passwordEncoder.matches(password, user.getPassword()) && email.equals(user.getUsername())
         ) {

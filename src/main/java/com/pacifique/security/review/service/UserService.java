@@ -8,15 +8,13 @@ import com.pacifique.security.review.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-import static com.pacifique.security.review.utils.TypeConverter.convertUserResponse;
+import static com.pacifique.security.review.utils.Utility.convertUserResponse;
 
 @RequiredArgsConstructor
 @Service
@@ -29,8 +27,6 @@ public class UserService implements IUserService {
     @Override
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
     public Iterable<UserResponse> getAllUsers() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        log.info("Authentication: {}", authentication);
         return userRepository.findAll()
                 .stream()
                 .map(user -> convertUserResponse().apply(user)).toList();
@@ -63,10 +59,11 @@ public class UserService implements IUserService {
         User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("user not found"));
 
         if (!(Role.valueOf(roleUpperCase).toString().equals(user.getRole()))) {
-            user.setRole(role.toUpperCase());
+            user.setRole(roleUpperCase);
             user.setPermissions(Role.valueOf(roleUpperCase).getPermissions());
             user.setUpdatedAt(LocalDateTime.now());
-            userRepository.save(user);
+            User saved = userRepository.save(user);
+            log.info("User role updated: {}", saved.getRole());
             emailService.sendEmail(user, "update");
             return "{\"success\" :\"user updated\"}";
         }

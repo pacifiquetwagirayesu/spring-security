@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.5.6'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'jacoco'
 }
 
 group = 'com.pacifique'
@@ -12,6 +13,10 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+}
+
+jacoco {
+    toolVersion = "0.8.12"
 }
 
 configurations {
@@ -31,17 +36,33 @@ dependencies {
     implementation("org.springframework.security:spring-security-data")
     implementation("io.jsonwebtoken:jjwt-jackson:0.13.0")
     implementation("io.jsonwebtoken:jjwt-api:0.13.0")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.13.0")
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13'
     implementation("com.mysql:mysql-connector-j:9.4.0")
     implementation("com.resend:resend-java:4.6.0")
     implementation("com.resend.api:sdk:1.5.3")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.13.0")
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
+    implementation platform('org.testcontainers:testcontainers-bom:2.0.1') //import bom
+    testImplementation('org.testcontainers:testcontainers-mysql') //no version specified
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport{
+    dependsOn test{
+        reports {
+            junitXml.required.set(true)
+            html.required.set(true)
+        }
+    }
 }
 
 tasks.named('test') {

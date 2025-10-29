@@ -15,6 +15,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -47,11 +48,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.strip().substring(7);
             String username = jwtService.getUsername(token);
-            AuthUser authUser = userDetailsService.loadUserByUsername(username);
+            AuthUser au = (AuthUser) userDetailsService.loadUserByUsername(username);
 
-            if (jwtService.isTokenValid(token, authUser)) {
-                var authentication = new UsernamePasswordAuthenticationToken(authUser,
-                        null, Set.of(new SimpleGrantedAuthority(authUser.getRole()))
+            if (jwtService.isTokenValid(token, au)) {
+                var authentication = new UsernamePasswordAuthenticationToken(au,
+                        null, Set.of(new SimpleGrantedAuthority(au.getRole()))
                 );
 
                 //authentication.setDetails(new WebAuthenticationDetails(request)); i don't need metadata

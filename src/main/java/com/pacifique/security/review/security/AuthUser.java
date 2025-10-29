@@ -37,7 +37,7 @@ public class AuthUser implements UserDetails {
 
 
 
-    protected static AuthUser getUser(User user) {
+    public static AuthUser getUser(User user) {
        return AuthUser.builder()
                .username(user.getEmail())
                .id(user.getId())
