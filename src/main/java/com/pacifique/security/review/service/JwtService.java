@@ -66,7 +66,6 @@ public class JwtService implements IJwtService {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-
     }
 
     private Key getSignedKey() {

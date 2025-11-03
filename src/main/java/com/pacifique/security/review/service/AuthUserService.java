@@ -3,7 +3,6 @@ package com.pacifique.security.review.service;
 import com.pacifique.security.review.dto.UserLoginRequest;
 import com.pacifique.security.review.dto.UserLoginResponse;
 import com.pacifique.security.review.dto.UserResponse;
-import com.pacifique.security.review.exception.InvalidToken;
 import com.pacifique.security.review.exception.UserNotFound;
 import com.pacifique.security.review.model.Token;
 import com.pacifique.security.review.model.User;
@@ -39,28 +38,24 @@ public class AuthUserService implements IAuthUserService {
     public UserLoginResponse logInUser(UserLoginRequest req) {
         AuthUser au = (AuthUser) userDetailsService.loadUserByUsername(req.username());
 
-        Token ut = tokenRepository.findByUserId(au.getId())
-                .orElseThrow(() -> new InvalidToken("Invalid token"));
-
         if (!passwordEncoder.matches(req.password(), au.getPassword())) {
             throw new UserNotFound("Please check your username and password");
         }
 
-        if (validTokeHandler(ut.getToken(), jwtService, au)) return loginUserResponse(au, ut);
+        var tk = tokenRepository.findByUserId(au.getId());
 
-        log.info("deleted expired token");
-        tokenRepository.delete(ut);
+        if (tk.isPresent() && validTokeHandler(tk.get().getToken(), jwtService, au))
+            return loginUserResponse(au, tk.get());
+
+        tk.ifPresent(tokenRepository::delete);
+        Token token = tokenRepository.save(Token.builder()
+                .userId(au.getId())
+                .token(jwtService.generateToken(au))
+                .refreshToken(jwtService.generateRefreshToken(au)).build());
 
         log.info("loading a new token for user {}", au.getId());
-        String token = jwtService.generateToken(au);
-        String refreshToken = jwtService.generateRefreshToken(au);
-
-
-        var savedToken = tokenRepository.save(Token.builder().userId(au.getId())
-                .token(token).refreshToken(refreshToken).build());
-
-        log.info("Access Token loaded: {}", savedToken.getToken());
-        return loginUserResponse(au, savedToken);
+        log.info("Access Token loaded: {}", token.getToken());
+        return loginUserResponse(au, token);
     }
 
 
