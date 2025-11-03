@@ -4,6 +4,7 @@ import com.pacifique.security.review.dto.UserRequest;
 import com.pacifique.security.review.dto.UserResponse;
 import com.pacifique.security.review.model.Role;
 import com.pacifique.security.review.model.User;
+import com.pacifique.security.review.proxies.IEmailProxies;
 import com.pacifique.security.review.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import static com.pacifique.security.review.utils.Utility.convertUserResponse;
 
@@ -22,7 +24,8 @@ import static com.pacifique.security.review.utils.Utility.convertUserResponse;
 public class UserService implements IUserService {
     private final IUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final EmailService emailService;
+    private final IEmailProxies newAccountEmailServiceProxy;
+    private final IEmailProxies updateAccountEmailServiceProxy;
 
     @Override
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
@@ -46,15 +49,15 @@ public class UserService implements IUserService {
 
         userRepository.save(user);
         log.info("User created: {}", user.getEmail());
+        newAccountEmailServiceProxy.accountActivityNotification(user);
 
-        emailService.sendEmail(user, "new user created");
         return "successfully created";
     }
 
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public String updateUserRole(Long id, String role) {
+    public Map<String, String> updateUserRole(Long id, String role) {
         String roleUpperCase = role.toUpperCase();
         User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("user not found"));
 
@@ -64,10 +67,11 @@ public class UserService implements IUserService {
             user.setUpdatedAt(LocalDateTime.now());
             User saved = userRepository.save(user);
             log.info("User role updated: {}", saved.getRole());
-            emailService.sendEmail(user, "update");
-            return "{\"success\" :\"user updated\"}";
+            updateAccountEmailServiceProxy.accountActivityNotification(user);
+
+            return Map.of("success", "user updated");
         }
-        return null;
+        return Map.of();
 
     }
 

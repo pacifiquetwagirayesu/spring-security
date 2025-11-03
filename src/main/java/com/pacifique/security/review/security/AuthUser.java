@@ -19,6 +19,7 @@ import static com.pacifique.security.review.utils.ConstantsFields.PREFIX;
 @Builder
 @Getter
 public class AuthUser implements UserDetails {
+    Set<String> permissions;
     private long id;
     private String username;
     private String firstName;
@@ -26,29 +27,22 @@ public class AuthUser implements UserDetails {
     private String password;
     private String role;
 
-    Set<String> permissions;
-
+    public static AuthUser getUser(User user) {
+        return AuthUser.builder()
+                .username(user.getEmail())
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .password(user.getPassword())
+                .role(PREFIX.concat(Role.valueOf(user.getRole()).name()))
+                .permissions(user.getPermissions())
+                .build();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
     }
-
-
-
-
-    public static AuthUser getUser(User user) {
-       return AuthUser.builder()
-               .username(user.getEmail())
-               .id(user.getId())
-               .firstName(user.getFirstName())
-               .lastName(user.getLastName())
-               .password(user.getPassword())
-               .role(PREFIX.concat(Role.valueOf(user.getRole()).name()))
-               .permissions(user.getPermissions())
-               .build();
-    }
-
 
     @Override
     public String toString() {

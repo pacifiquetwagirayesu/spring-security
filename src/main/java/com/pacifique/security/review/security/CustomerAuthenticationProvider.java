@@ -19,6 +19,7 @@ import java.util.Set;
 public class CustomerAuthenticationProvider implements AuthenticationProvider {
     private final UserDetailsServiceImpl userDetailsService;
     private final PasswordEncoder passwordEncoder;
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String email = authentication.getPrincipal().toString();

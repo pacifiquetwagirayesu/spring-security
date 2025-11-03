@@ -7,6 +7,6 @@ public record UserLoginResponse(
         String email,
         String firstName,
         String lastName,
-        Map<String,String> tokens
+        Map<String, String> tokens
 ) {
 }

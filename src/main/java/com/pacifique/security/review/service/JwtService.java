@@ -1,15 +1,11 @@
 package com.pacifique.security.review.service;
 
-import com.pacifique.security.review.model.User;
 import com.pacifique.security.review.security.AuthUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +19,6 @@ import java.util.function.Function;
 
 @Configuration
 @Slf4j
-@RequiredArgsConstructor
 public class JwtService implements IJwtService {
     @Value("${security.jwt.secret-key}")
     @Getter
@@ -35,26 +30,22 @@ public class JwtService implements IJwtService {
     @Value("${security.jwt.refresh-token.expiration}")
     private Long refreshTokenExpiration;
 
-    private final HttpServletRequest request;
-    private final HttpServletResponse response;
-
 
     @Override
     public String generateToken(AuthUser user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", user.getRole());
         claims.put("authorities", user.getAuthorities());
-        return buildJwtToken(claims, user,this.expiration);
+        return buildJwtToken(claims, user, this.expiration);
     }
 
     @Override
     public String generateRefreshToken(AuthUser user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", user.getRole());
-        claims.put("authorities",user.getPermissions() );
-        return buildJwtToken(claims, user,this.refreshTokenExpiration);
+        claims.put("authorities", user.getPermissions());
+        return buildJwtToken(claims, user, this.refreshTokenExpiration);
     }
-
 
 
     public boolean isTokenValid(String token, AuthUser user) throws JwtException {
@@ -63,18 +54,18 @@ public class JwtService implements IJwtService {
     }
 
 
-    private  <T> T extractClaims(String token, Function<Claims, T> claimsResolver) throws JwtException {
+    private <T> T extractClaims(String token, Function<Claims, T> claimsResolver) throws JwtException {
         Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
 
     }
 
-    private  Claims extractAllClaims(String token) throws JwtException {
-            return Jwts.parser()
-                    .setSigningKey(getSignedKey())
-                    .build()
-                    .parseSignedClaims(token)
-                    .getPayload();
+    private Claims extractAllClaims(String token) throws JwtException {
+        return Jwts.parser()
+                .setSigningKey(getSignedKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
 
     }
 
@@ -100,16 +91,13 @@ public class JwtService implements IJwtService {
     }
 
 
-    private boolean isTokenExpired(String token)  throws JwtException {
-            return extractClaims(token, Claims::getExpiration).before(new Date());
+    private boolean isTokenExpired(String token) throws JwtException {
+        return extractClaims(token, Claims::getExpiration).before(new Date());
     }
 
     public String getUsername(String token) throws JwtException {
         return extractClaims(token, Claims::getSubject);
     }
-
-
-
 
 
 }

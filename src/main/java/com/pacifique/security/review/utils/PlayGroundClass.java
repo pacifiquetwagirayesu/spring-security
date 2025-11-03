@@ -1,14 +1,12 @@
 package com.pacifique.security.review.utils;
 
-import lombok.RequiredArgsConstructor;
-import org.apache.commons.codec.binary.Base64;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.pacifique.security.review.model.User;
+import com.pacifique.security.review.proxies.NewAccountEmailServiceProxy;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.Date;
 
-@RequiredArgsConstructor
-public class PlayingAroundClass {
+public class PlayGroundClass {
     public static void main(String[] args) {
 //        Runnable task  = () ->{
 //            System.out.println("args");
@@ -61,9 +59,32 @@ public class PlayingAroundClass {
         Date date = new Date(System.currentTimeMillis() + 60000);
         System.out.println("date = " + date);
 
+//        var context = new AnnotationConfigApplicationContext(SpringSecurityReviewApplication.class);
+//        PasswordEncoder passwordEncoder = context.getBean(PasswordEncoder.class);
+//        String encode = passwordEncoder.encode("password");
+//        System.out.println("passwordEncoder = " + encode);
+//        var jwtObj = new AnnotationConfigApplicationContext(JwtService.class);
+//        JwtService jwtService = jwtObj.getBean(JwtService.class);
+//        AuthUser authUser = AuthUser.getUser(User.builder().email("email")
+//                    .id(1L)
+//                        .role(Role.ADMIN.name())
+//                        .firstName("admin")
+//                        .lastName("user")
+//                .password(passwordEncoder.encode("pass"))
+//                .permissions(Role.ADMIN.getPermissions())
+//                .build());
+//        String generatedToken = jwtService.generateToken(authUser);
+//        System.out.println("generatedToken = " + generatedToken);
+
+        var context = new AnnotationConfigApplicationContext(NewAccountEmailServiceProxy.class);
+        NewAccountEmailServiceProxy serviceProxy = context.getBean(NewAccountEmailServiceProxy.class);
+
+        serviceProxy.accountActivityNotification(User.builder()
+                .lastName("last").firstName("first").email("emailtwo")
+                .build());
+
 
     }
-
 
 
 }

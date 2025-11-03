@@ -22,11 +22,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 @RestController
 @Slf4j
-@Tag(name = "User Controller",description = "Operations related to user")
+@Tag(name = "User Controller", description = "Operations related to user")
 public class UserController {
     private final IUserService userService;
 
@@ -34,9 +36,9 @@ public class UserController {
      *
      * @return List of UserResponse
      */
-    @Operation(summary = "Get  Users",description = "Returns a list of users")
+    @Operation(summary = "Get  Users", description = "Returns a list of users")
     @ApiResponse(
-            responseCode = "200",description = "Users found",
+            responseCode = "200", description = "Users found",
             content = @Content(schema = @Schema(implementation = UserResponse.class)))
     @GetMapping
     public Iterable<UserResponse> getAllUsers() {
@@ -50,7 +52,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public String updateUserRole(@PathVariable("id") long id, @RequestParam String role) {
+    public Map<String, String> updateUserRole(@PathVariable("id") long id, @RequestParam String role) {
         return userService.updateUserRole(id, role);
     }
 

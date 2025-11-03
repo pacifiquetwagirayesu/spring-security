@@ -7,16 +7,18 @@ import org.springframework.http.HttpStatus;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 public class HttpFilterErrorMessage {
 
-    private HttpFilterErrorMessage() {}
+    private HttpFilterErrorMessage() {
+    }
 
     public static void generateResponse(HttpServletResponse res, HttpServletRequest req, Exception ex) throws IOException {
         res.setContentType("application/json");
         res.getWriter().write(
                 "{" +
                         "\"message\" : \"" + ex.getMessage() + "\" ,"
-                        + "\"status\"" + ":" +   res.getStatus() + " ,"
+                        + "\"status\"" + ":" + res.getStatus() + " ,"
                         + "\"path\": \"" + req.getServletPath() + "\" ,"
                         + "\"timestamp\" : \"" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "\"" +
 
@@ -27,7 +29,7 @@ public class HttpFilterErrorMessage {
     }
 
     @Deprecated
-    public static int getStatusCode(HttpServletResponse res,Exception ex) {
+    public static int getStatusCode(HttpServletResponse res, Exception ex) {
         return switch (res.getStatus()) {
             case 404 -> HttpStatus.NOT_FOUND.value();
             case 401 -> HttpStatus.UNAUTHORIZED.value();
@@ -35,7 +37,7 @@ public class HttpFilterErrorMessage {
             case 500 -> HttpStatus.INTERNAL_SERVER_ERROR.value();
             case 400 -> HttpStatus.BAD_REQUEST.value();
             case 405 -> HttpStatus.METHOD_NOT_ALLOWED.value();
-            default ->{
+            default -> {
                 int status = HttpStatus.OK.value();
 
                 if (ex.getMessage().contains("Request method")) {
