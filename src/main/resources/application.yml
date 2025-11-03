@@ -3,9 +3,9 @@ spring:
   application:
     name: security-review
   datasource:
-    url: jdbc:mysql://localhost:3306/security-db
-    password: rootpwd
-    username: root
+    url: ${DATABASE_URL}
+    password: ${DATABASE_PASSWORD}
+    username: ${DATABASE_USERNAME}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -18,16 +18,16 @@ logging:
     com.pacifique.security.review.controller: debug
 
 resend:
-  api-key: re_JHiDH6vZ_GjAdbf3YP8WJmBxkua1N8um4
+  api-key: ${RESEND_APIKEY}
   api-url: https://api.resend.com/emails
-  from: dev@commitlink.org
+  from: ${RESEND_ADMIN_EMAIL}
 security:
   jwt:
-    secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+    secret-key: ${SECRET_KEY}
     expiration: 86400000
     refresh-token:
       expiration: 604800000
-    super-admin: c3VwZXJBZG1pbnBlcm1pc3Npb25zdXBlckFkbWlucGVybWlzc2lvbnN1cGVyQWRtaW5wZXJtaXNz
+    super-admin: ${SUPER_ADMIN}
 
 
 springdoc:
@@ -38,7 +38,7 @@ spring:
   config:
     activate:
       on-profile: docker
-  datasource.url: jdbc:mysql://mysql:3306/security-db
+  datasource.url: ${DOCKER_DATABASE_URL}
 
 logging:
   level:
