@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/admin")
 @PreAuthorize("hasRole('SUPER_ADMIN')")
-@Tag(name = "Admin Controller",description = "Operation related to admin")
+@Tag(name = "Admin Controller", description = "Operation related to admin")
 public class AdminController {
 
     @GetMapping

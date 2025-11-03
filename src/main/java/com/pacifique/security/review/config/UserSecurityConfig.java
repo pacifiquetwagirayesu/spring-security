@@ -20,7 +20,7 @@ public class UserSecurityConfig {
         Map<String, PasswordEncoder> encoders = new HashMap<>();
 
         encoders.put("bcrypt", new BCryptPasswordEncoder());
-        encoders.put("noop",  NoOpPasswordEncoder.getInstance());
+        encoders.put("noop", NoOpPasswordEncoder.getInstance());
         encoders.put("scrypt", SCryptPasswordEncoder.defaultsForSpringSecurity_v5_8());
         encoders.put("argon2", Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8());
 

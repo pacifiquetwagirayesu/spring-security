@@ -6,5 +6,6 @@ import com.pacifique.security.review.dto.UserResponse;
 
 public interface IAuthUserService {
     UserLoginResponse logInUser(UserLoginRequest req);
+
     UserResponse loggedInUser();
 }

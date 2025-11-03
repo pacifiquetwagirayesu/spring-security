@@ -13,7 +13,7 @@ import static com.pacifique.security.review.utils.ConstantsFields.WRITE;
 @Getter
 public enum Role {
 
-    SUPER_ADMIN(Set.of(READ, WRITE, DELETE,ARCHIVE)){
+    SUPER_ADMIN(Set.of(READ, WRITE, DELETE, ARCHIVE)) {
         @Override
         public Set<String> getPermissions() {
             return Set.of(READ, WRITE, DELETE, ARCHIVE);
@@ -39,7 +39,7 @@ public enum Role {
     private final Set<String> permissions;
 
     Role(Set<String> permissions) {
-       this.permissions = permissions;
+        this.permissions = permissions;
     }
 
 

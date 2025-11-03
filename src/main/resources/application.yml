@@ -1,3 +1,4 @@
+
 spring:
   application:
     name: security-review
@@ -20,7 +21,6 @@ resend:
   api-key: re_JHiDH6vZ_GjAdbf3YP8WJmBxkua1N8um4
   api-url: https://api.resend.com/emails
   from: dev@commitlink.org
-  subject: Welcome to Security Review App
 security:
   jwt:
     secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
@@ -33,7 +33,6 @@ security:
 springdoc:
   swagger-ui:
     path: /api-docs
-
 ---
 spring:
   config:

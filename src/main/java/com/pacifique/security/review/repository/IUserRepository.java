@@ -12,5 +12,6 @@ import java.util.Optional;
 public interface IUserRepository extends CrudRepository<User, Long> {
     @NonNull
     List<User> findAll();
+
     Optional<User> findByEmail(String email);
 }

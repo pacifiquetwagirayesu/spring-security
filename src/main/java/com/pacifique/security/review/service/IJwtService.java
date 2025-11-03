@@ -1,18 +1,7 @@
 package com.pacifique.security.review.service;
 
-import com.pacifique.security.review.model.User;
 import com.pacifique.security.review.security.AuthUser;
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.security.core.Authentication;
-
-import java.security.Key;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Map;
-import java.util.function.Function;
 
 public interface IJwtService {
 
@@ -26,5 +15,4 @@ public interface IJwtService {
     String getUsername(String token);
 
 
-
-    }
+}

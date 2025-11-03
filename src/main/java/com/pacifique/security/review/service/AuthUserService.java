@@ -11,7 +11,6 @@ import com.pacifique.security.review.repository.ITokenRepository;
 import com.pacifique.security.review.repository.IUserRepository;
 import com.pacifique.security.review.security.AuthUser;
 import com.pacifique.security.review.security.UserDetailsServiceImpl;
-import com.pacifique.security.review.utils.Utility;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +46,7 @@ public class AuthUserService implements IAuthUserService {
             throw new UserNotFound("Please check your username and password");
         }
 
-        if (validTokeHandler(ut.getToken(),jwtService, au)) return loginUserResponse(au, ut);
+        if (validTokeHandler(ut.getToken(), jwtService, au)) return loginUserResponse(au, ut);
 
         log.info("deleted expired token");
         tokenRepository.delete(ut);

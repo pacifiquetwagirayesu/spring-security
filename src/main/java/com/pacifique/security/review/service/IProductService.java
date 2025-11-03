@@ -10,11 +10,14 @@ import java.util.Map;
 public interface IProductService {
     Iterable<ProductResponse> getProducts(int page, int size);
 
-    ProductResponse addProduct(ProductRequest req);
+    ProductResponse getProductById(Long id);
 
-    Map<String,String> deleteProduct(long id);
+    ProductPaginationResponse getMyProducts(int page, int size);
+
+    ProductResponse addProduct(ProductRequest req);
 
     Iterable<ProductResponse> addProducts(List<ProductRequest> req);
 
-    ProductPaginationResponse getMyProducts(int page, int size);
+    Map<String, String> deleteProduct(long id);
+
 }

@@ -52,13 +52,14 @@ public class Utility {
                 Map.of("accessToken", tokenObj.getToken(), "refreshToken", tokenObj.getRefreshToken()));
     }
 
-    public static boolean validTokeHandler(String token,IJwtService jwtService, AuthUser authUser) {
+    public static boolean validTokeHandler(String token, IJwtService jwtService, AuthUser authUser) {
         try {
             return jwtService.isTokenValid(token, authUser);
-        }catch (Exception e) {
+        } catch (Exception e) {
             log.error("validTokeHandler exception", e);
         }
         return false;
     }
+
 
 }

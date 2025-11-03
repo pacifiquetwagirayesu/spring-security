@@ -43,6 +43,12 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public ProductResponse getProductById(Long id) {
+        Product product = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product not found"));
+        return convertProductResponse().apply(product);
+    }
+
+    @Override
 //    @PostFilter("filterObject.owner().email == authentication.principal.username")
     public ProductPaginationResponse getMyProducts(int page, int size) {
         Page<Product> productPage = productRepository.findAllByOwner_Email(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "name")));

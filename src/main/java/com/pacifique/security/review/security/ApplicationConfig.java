@@ -53,13 +53,13 @@ public class ApplicationConfig {
     }
 
     @PostConstruct
-    public void setSecurityContextHolderName(){
+    public void setSecurityContextHolderName() {
         SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
     }
 
     @Bean
     public SecurityContextHolderStrategy securityContextHolderStrategy() {
-        return  SecurityContextHolder.getContextHolderStrategy();
+        return SecurityContextHolder.getContextHolderStrategy();
     }
 
 
