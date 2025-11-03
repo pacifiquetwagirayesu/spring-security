@@ -76,10 +76,10 @@ public class UserService implements IUserService {
     }
 
 
-    @Override
 //    @PreAuthorize("hasPermission('user','delete')")
-    @PreAuthorize("hasPermission(#id,'user','delete')")
 //    @PostAuthorize("hasPermission(returnObject,'delete')")
+    @PreAuthorize("hasPermission(#id,'user','delete')")
+    @Override
     public String deleteUserById(long id) {
         userRepository.deleteById(id);
         return "deleted";

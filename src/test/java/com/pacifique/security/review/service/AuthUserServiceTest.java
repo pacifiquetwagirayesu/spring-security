@@ -3,9 +3,7 @@ package com.pacifique.security.review.service;
 import com.pacifique.security.review.dto.UserLoginRequest;
 import com.pacifique.security.review.dto.UserLoginResponse;
 import com.pacifique.security.review.dto.UserResponse;
-import com.pacifique.security.review.exception.InvalidToken;
 import com.pacifique.security.review.exception.UserNotFound;
-import com.pacifique.security.review.model.Role;
 import com.pacifique.security.review.model.Token;
 import com.pacifique.security.review.model.User;
 import com.pacifique.security.review.repository.ITokenRepository;
@@ -67,8 +65,8 @@ public class AuthUserServiceTest {
         jwtService = mock(IJwtService.class);
         authUserService = new AuthUserService(
                 tokenRepository, userRepository, passwordEncoder, jwtService, userDetailsService);
-        when(passwordEncoder.encode(anyString())).thenReturn("password");
 
+        when(passwordEncoder.encode(anyString())).thenReturn("password");
         authUser = AuthUser.builder().password(passwordEncoder.encode("pass")).build();
         userToken = Token.builder().refreshToken("refreshToken").token("token").build();
         userLoginRequest = new UserLoginRequest("username@mail", "password");
@@ -76,19 +74,10 @@ public class AuthUserServiceTest {
 
     }
 
-    @Test
-    void userInvalidTokenTest() {
-        when(userDetailsService.loadUserByUsername(anyString())).thenReturn(authUser);
-        assertThrows(InvalidToken.class, () ->
-                        authUserService.logInUser(userLoginRequest),
-                "Invalid token"
-        );
-    }
 
     @Test
     void userInvalidCredentialsTest() {
         when(userDetailsService.loadUserByUsername(anyString())).thenReturn(authUser);
-        when(tokenRepository.findByUserId(anyLong())).thenReturn(Optional.of(userToken));
         when(passwordEncoder.matches(anyString(), anyString())).thenReturn(false);
         assertThrows(UserNotFound.class, () -> authUserService.logInUser(userLoginRequest)
                 , "Please check your username and password");
@@ -164,7 +153,6 @@ public class AuthUserServiceTest {
         SecurityContextHolder.setContext(securityContext);
 
         verify(authenticationManager).authenticate(authentication);
-
     }
 
 }

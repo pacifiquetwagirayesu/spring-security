@@ -15,7 +15,8 @@ import java.util.function.Function;
 
 @Slf4j
 public class Utility {
-    private Utility() {
+    public Utility() throws Exception {
+        throw new Exception("Invalid action, Utility class");
     }
 
 
