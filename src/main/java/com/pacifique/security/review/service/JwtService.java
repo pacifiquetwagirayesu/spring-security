@@ -73,10 +73,10 @@ public class JwtService implements IJwtService {
         return Keys.hmacShaKeyFor(decodedKey);
     }
 
-    private String buildJwtToken(
+    public String buildJwtToken(
             Map<String, Object> claims,
             AuthUser user,
-            long expiration
+            Long expiration
     ) {
 
         return Jwts.builder()
