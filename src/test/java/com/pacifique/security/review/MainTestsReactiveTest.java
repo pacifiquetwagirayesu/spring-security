@@ -8,9 +8,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @SpringBootTest
-//@AutoConfigureWebTestClient
 @Deprecated
-public class MainTestsReactiveTest {
+public class MainTestsReactiveTest extends MysqlTestBase {
 //    @Autowired
 //    private WebTestClient client;
 

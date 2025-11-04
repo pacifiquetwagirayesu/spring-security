@@ -41,7 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-
+//0788538239 uwase christine
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.strip().substring(7);
             String username = jwtService.getUsername(token);

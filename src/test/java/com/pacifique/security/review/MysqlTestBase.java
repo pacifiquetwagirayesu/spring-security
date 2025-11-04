@@ -20,6 +20,12 @@ public class MysqlTestBase {
         registry.add("spring.datasource.username", database::getUsername);
         registry.add("spring.datasource.password", database::getPassword);
         registry.add("spring.datasource.jpa.hibernate.ddl-auto", () -> "create-drop");
+        registry.add("security.jwt.secret-key", () -> "secret-key");
+        registry.add("security.jwt.expiration", () -> 30000L);
+        registry.add("security.jwt.refresh-token.expiration", () -> 60000L);
+        registry.add("resend.api-key", () -> "api-key");
+        registry.add("resend.from", () -> "resend@gmail.com");
+        registry.add("security.jwt.super-admin", () -> "super-admin");
     }
 
 
