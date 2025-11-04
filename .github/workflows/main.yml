@@ -1,9 +1,11 @@
 name: Spring boot security CI & Test
 
 on:
+  pull_request:
   push:
     branches:
       - ft/test-properties-issue
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest

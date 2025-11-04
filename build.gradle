@@ -56,6 +56,10 @@ dependencies {
 test {
     useJUnitPlatform()
     finalizedBy jacocoTestReport
+    systemProperty 'testcontainers.reuse.enable', 'true'
+    testLogging {
+        events "passed" , "skipped", "failed"
+    }
 }
 
 jacocoTestReport{
