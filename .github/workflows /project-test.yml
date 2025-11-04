@@ -1,0 +1,38 @@
+name: Spring boot security CI & Test
+
+on:
+  push:
+    branches:
+      - ft/test-properties-issue
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      RESEND_APIKEY: ${{ secrets.RESEND_APIKEY }}
+      RESEND_ADMIN_EMAIL: ${{ secrets.RESEND_ADMIN_EMAIL }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      SUPER_ADMIN: ${{ secrets.SUPER_ADMIN }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+      - name: Verify Docker availability (for Testcontainers)
+        run: docker info
+
+      - name: Grant execute permission for Gradle wrapper
+        run: chmod +x gradlew
+
+      - name: Build and run tests
+        run: ./gradlew clean build --info
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: spring-boot-app
+          path: build/libs/*.jar
