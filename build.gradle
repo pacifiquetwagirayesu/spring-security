@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.5.6'
+    id 'org.springframework.boot' version '3.5.7'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'jacoco'
 }
@@ -30,26 +30,31 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation("org.springframework.security:spring-security-data")
     implementation("io.jsonwebtoken:jjwt-jackson:0.13.0")
     implementation("io.jsonwebtoken:jjwt-api:0.13.0")
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13'
-    implementation("com.mysql:mysql-connector-j:9.4.0")
+    implementation 'org.postgresql:postgresql:42.7.8'
     implementation("com.resend:resend-java:4.6.0")
     implementation("com.resend.api:sdk:1.5.3")
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.13.0")
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    annotationProcessor 'org.projectlombok:lombok'
     implementation platform('org.testcontainers:testcontainers-bom:2.0.1') //import bom
-    testImplementation('org.testcontainers:testcontainers-mysql') //no version specified
+    annotationProcessor 'org.projectlombok:lombok'
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.13.0")
+    runtimeOnly 'org.postgresql:postgresql'
+    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation "org.testcontainers:testcontainers-postgresql:2.0.1"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:postgresql'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 

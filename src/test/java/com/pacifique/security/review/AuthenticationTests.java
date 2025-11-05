@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AuthenticationTests extends MysqlTestBase {
+public class AuthenticationTests extends ConfigDatabase {
     @Autowired
     private MockMvc mvc;
 

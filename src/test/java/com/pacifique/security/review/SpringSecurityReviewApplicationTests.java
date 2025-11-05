@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringSecurityReviewApplicationTests extends  MysqlTestBase {
+class SpringSecurityReviewApplicationTests extends ConfigDatabase {
 
     @Test
     void contextLoads() {
