@@ -1,16 +1,17 @@
 
 spring:
   application:
-    name: security-review
+    name: backend security
   datasource:
-    url: ${DATABASE_URL}
-    password: ${DATABASE_PASSWORD}
-    username: ${DATABASE_USERNAME}
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 logging:
   level:
     root: info
@@ -18,16 +19,16 @@ logging:
     com.pacifique.security.review.controller: debug
 
 resend:
-  api-key: ${RESEND_APIKEY}
+  api-key: ${RESEND_API-KEY}
   api-url: https://api.resend.com/emails
-  from: ${RESEND_ADMIN_EMAIL}
+  from: ${RESEND_FROM}
 security:
   jwt:
-    secret-key: ${SECRET_KEY}
+    secret-key: ${SECURITY_JWT_SECRET-KEY}
     expiration: 86400000
     refresh-token:
       expiration: 604800000
-    super-admin: ${SUPER_ADMIN}
+    super-admin: ${SECURITY_JWT_SUPER-ADMIN}
 
 
 springdoc:
@@ -38,8 +39,9 @@ spring:
   config:
     activate:
       on-profile: docker
-  datasource.url: ${DOCKER_DATABASE_URL}
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
 
 logging:
   level:
-    root: warn
+    root: info

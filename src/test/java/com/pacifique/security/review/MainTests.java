@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @DisplayName("Main Test Class")
-public class MainTests extends MysqlTestBase{
+public class MainTests extends ConfigDatabase {
 
     @Autowired
     private MockMvc mvc;
@@ -32,7 +32,6 @@ public class MainTests extends MysqlTestBase{
     @BeforeEach
     void setUp() {
         userRepository.deleteAll();
-
         User user = User.builder().email("marry@gmail.com")
                 .password("password")
                 .permissions(Role.ADMIN.getPermissions())
@@ -41,7 +40,7 @@ public class MainTests extends MysqlTestBase{
     }
 
     @Test
-    @DisplayName("Hello Unauthenticated Test")
+    @DisplayName("Unauthenticated Test")
     void helloUnauthenticated() throws Exception {
         mvc.perform(get("/hello"))
                 .andExpect(content().json("{\"message\":\"Full authentication is required to access this resource\"}"))

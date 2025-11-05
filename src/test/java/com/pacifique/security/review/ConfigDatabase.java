@@ -2,13 +2,11 @@ package com.pacifique.security.review;
 
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.mysql.MySQLContainer;
+import org.testcontainers.containers.PostgreSQLContainer;
 
-public class MysqlTestBase {
+public class ConfigDatabase {
 
-    private static final JdbcDatabaseContainer<MySQLContainer> database = new MySQLContainer("mysql:8.0.32")
-            .withStartupTimeoutSeconds(300);
+    private static final PostgreSQLContainer<?> database = new PostgreSQLContainer<>("postgres:10");
 
     static {
         database.start();
@@ -19,7 +17,8 @@ public class MysqlTestBase {
         registry.add("spring.datasource.url", database::getJdbcUrl);
         registry.add("spring.datasource.username", database::getUsername);
         registry.add("spring.datasource.password", database::getPassword);
-        registry.add("spring.datasource.jpa.hibernate.ddl-auto", () -> "create-drop");
+        registry.add("spring.datasource.driver-class-name", database::getDriverClassName);
+        registry.add("spring.jpa.hibernate.ddl-auto", () -> "update");
         registry.add("security.jwt.secret-key", () -> "secret-key");
         registry.add("security.jwt.expiration", () -> 30000L);
         registry.add("security.jwt.refresh-token.expiration", () -> 60000L);
