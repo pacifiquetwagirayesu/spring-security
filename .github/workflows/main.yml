@@ -49,11 +49,6 @@ jobs:
           username: paccy
           password: dckr_pat_JFj-iaYnYzkkQCjdo3pk9QHfjZk
 
-      - name: Docker tag
-        run: |
-          docker tag spring-security-review-one-main paccy/advanced-spring-security:latest
-          docker tag spring-security-review-one-main paccy/advanced-spring-security:${{ github.sha }}
-
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
