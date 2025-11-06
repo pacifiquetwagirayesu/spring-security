@@ -9,6 +9,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+      id-token: write
     env:
       RESEND_API-KEY: ${{ secrets.RESEND_APIKEY }}
       RESEND_FROM: ${{ secrets.RESEND_ADMIN_EMAIL }}
