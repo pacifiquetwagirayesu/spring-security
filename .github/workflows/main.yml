@@ -9,6 +9,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+      id-token: write
     env:
       RESEND_API-KEY: ${{ secrets.RESEND_APIKEY }}
       RESEND_FROM: ${{ secrets.RESEND_ADMIN_EMAIL }}
@@ -46,13 +51,8 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Docker tag
-        run: |
-          docker tag spring-security-review-one-main paccy/advanced-spring-security:latest
-          docker tag spring-security-review-one-main paccy/advanced-spring-security:${{ github.sha }}
+          username: paccy
+          password: dckr_pat_JFj-iaYnYzkkQCjdo3pk9QHfjZk
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
