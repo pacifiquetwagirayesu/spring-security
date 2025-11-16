@@ -1,4 +1,4 @@
-package com.pacifique.security.review.service;
+package com.pacifique.security.review.services;
 
 import com.pacifique.security.review.dto.UserLoginRequest;
 import com.pacifique.security.review.dto.UserLoginResponse;
@@ -11,6 +11,7 @@ import com.pacifique.security.review.repository.IUserRepository;
 import com.pacifique.security.review.security.AuthUser;
 import com.pacifique.security.review.security.UserDetailsServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -76,6 +77,7 @@ public class AuthUserServiceTest {
 
 
     @Test
+    @DisplayName("Test Invalid User Credentials")
     void userInvalidCredentialsTest() {
         when(userDetailsService.loadUserByUsername(anyString())).thenReturn(authUser);
         when(passwordEncoder.matches(anyString(), anyString())).thenReturn(false);
@@ -85,6 +87,7 @@ public class AuthUserServiceTest {
     }
 
     @Test
+    @DisplayName("test Valid User credentials")
     void userValidCredentialsTest() {
         when(userDetailsService.loadUserByUsername(anyString())).thenReturn(authUser);
         when(tokenRepository.findByUserId(anyLong())).thenReturn(Optional.of(userToken));
@@ -99,6 +102,7 @@ public class AuthUserServiceTest {
 
 
     @Test
+    @DisplayName("Test Valid user credentials but invalid Token")
     void userValidCredentialsInvalidTokenTest() {
         when(userDetailsService.loadUserByUsername(anyString())).thenReturn(authUser);
         when(tokenRepository.findByUserId(anyLong())).thenReturn(Optional.of(userToken));
@@ -124,6 +128,7 @@ public class AuthUserServiceTest {
 
 
     @Test
+    @DisplayName("Test Log In User")
     void loggedInUserTest() {
         authenticateUser();
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
@@ -134,6 +139,7 @@ public class AuthUserServiceTest {
     }
 
     @Test
+    @DisplayName("Test Log in User not found")
     void loggedInUserNotFoundTest() {
         authenticateUser();
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.empty());

@@ -1,4 +1,4 @@
-package com.pacifique.security.review.service;
+package com.pacifique.security.review.services;
 
 import com.pacifique.security.review.dto.ProductPaginationResponse;
 import com.pacifique.security.review.dto.ProductRequest;

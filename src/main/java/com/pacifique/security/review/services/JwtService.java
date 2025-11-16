@@ -1,4 +1,4 @@
-package com.pacifique.security.review.service;
+package com.pacifique.security.review.services;
 
 import com.pacifique.security.review.security.AuthUser;
 import io.jsonwebtoken.Claims;
@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Base64;
@@ -17,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-@Configuration
+@Component
 @Slf4j
 public class JwtService implements IJwtService {
     @Value("${security.jwt.secret-key}")

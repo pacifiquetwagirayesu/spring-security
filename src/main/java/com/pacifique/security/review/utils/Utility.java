@@ -7,7 +7,7 @@ import com.pacifique.security.review.model.Product;
 import com.pacifique.security.review.model.Token;
 import com.pacifique.security.review.model.User;
 import com.pacifique.security.review.security.AuthUser;
-import com.pacifique.security.review.service.IJwtService;
+import com.pacifique.security.review.services.IJwtService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;

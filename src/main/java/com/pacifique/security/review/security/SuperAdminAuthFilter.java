@@ -17,6 +17,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-@Configuration
+@Component
 @Slf4j
 @RequiredArgsConstructor
 public class SuperAdminAuthFilter extends OncePerRequestFilter {

@@ -1,4 +1,4 @@
-package com.pacifique.security.review.service;
+package com.pacifique.security.review.services;
 
 import com.pacifique.security.review.security.AuthUser;
 import io.jsonwebtoken.Claims;
@@ -138,7 +138,7 @@ public class JwtServiceTest {
         when(authUser.getLastName()).thenReturn("Doe");
 
         JwtService service = spy(new JwtService());
-//        doReturn(mock(Key.class)).when(service).getSignedKey();
+//        doReturn(mock(Key.class)).when(services).getSignedKey();
         try (MockedStatic<Jwts> jwtsMock = mockStatic(Jwts.class)) {
             jwtsMock.when(Jwts::builder).thenReturn(jwtBuilder);
 
@@ -162,7 +162,7 @@ public class JwtServiceTest {
         when(jws.getPayload()).thenReturn(claims);
 
         JwtService service = spy(new JwtService());
-//        doReturn(mock(Key.class)).when(service).getSignedKey();
+//        doReturn(mock(Key.class)).when(services).getSignedKey();
 
         try (MockedStatic<Jwts> jwtsMock = mockStatic(Jwts.class)) {
             jwtsMock.when(Jwts::parser).thenReturn(jwtParserBuilder);

@@ -2,7 +2,7 @@ package com.pacifique.security.review.controller;
 
 import com.pacifique.security.review.dto.UserRequest;
 import com.pacifique.security.review.dto.UserResponse;
-import com.pacifique.security.review.service.IUserService;
+import com.pacifique.security.review.services.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

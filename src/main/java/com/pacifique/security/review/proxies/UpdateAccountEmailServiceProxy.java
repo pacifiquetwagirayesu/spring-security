@@ -32,7 +32,7 @@ public class UpdateAccountEmailServiceProxy implements IEmailProxies {
     public void accountActivityNotification(User user) {
         Callable<String> task = () -> {
             log.info("Sending email...");
-            log.info("Starting email service: {}", Thread.currentThread().getName());
+            log.info("Starting email services: {}", Thread.currentThread().getName());
 
             AuthUser fromUser = (AuthUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             log.info("fromUser: {}", fromUser);
