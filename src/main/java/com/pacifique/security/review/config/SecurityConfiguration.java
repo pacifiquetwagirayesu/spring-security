@@ -22,7 +22,7 @@ import static com.pacifique.security.review.utils.ConstantsFields.WHITE_LIST_URL
 @RequiredArgsConstructor
 @EnableMethodSecurity
 @EnableAsync
-public class AppSecurityConfiguration {
+public class SecurityConfiguration {
     private final AuthCustomerFilter authCustomerFilter;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final SuperAdminAuthFilter superAdminAuthFilter;

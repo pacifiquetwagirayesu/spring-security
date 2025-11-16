@@ -34,7 +34,7 @@ services:
 #     - security-net
   db:
     image: postgres:15
-    container_name: db-service
+    container_name: db-services
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: userpass
@@ -49,7 +49,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: pg-admin-service
+    container_name: pg-admin-services
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@example.com
       PGADMIN_DEFAULT_PASSWORD: admin_password

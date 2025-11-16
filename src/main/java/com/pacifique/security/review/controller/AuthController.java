@@ -3,7 +3,7 @@ package com.pacifique.security.review.controller;
 import com.pacifique.security.review.dto.UserLoginRequest;
 import com.pacifique.security.review.dto.UserLoginResponse;
 import com.pacifique.security.review.dto.UserResponse;
-import com.pacifique.security.review.service.IAuthUserService;
+import com.pacifique.security.review.services.IAuthUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

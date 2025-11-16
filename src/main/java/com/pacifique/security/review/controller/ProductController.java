@@ -3,9 +3,10 @@ package com.pacifique.security.review.controller;
 import com.pacifique.security.review.dto.ProductPaginationResponse;
 import com.pacifique.security.review.dto.ProductRequest;
 import com.pacifique.security.review.dto.ProductResponse;
-import com.pacifique.security.review.service.IProductService;
+import com.pacifique.security.review.services.IProductService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -41,11 +43,13 @@ public class ProductController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ProductResponse addProduct(@RequestBody ProductRequest req) {
         return productService.addProduct(req);
     }
 
     @PostMapping("/all")
+    @ResponseStatus(HttpStatus.CREATED)
     public Iterable<ProductResponse> addProduct(@RequestBody List<ProductRequest> req) {
         return productService.addProducts(req);
     }

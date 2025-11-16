@@ -1,7 +1,7 @@
 package com.pacifique.security.review.utils;
 
 import com.pacifique.security.review.security.AuthUser;
-import com.pacifique.security.review.service.IJwtService;
+import com.pacifique.security.review.services.IJwtService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
