@@ -1,6 +1,7 @@
 package com.pacifique.security.review.config;
 
 import com.pacifique.security.review.repository.IProductRepository;
+import com.pacifique.security.review.security.AuthUser;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +27,7 @@ public class ProductPermissionEvaluator implements PermissionEvaluator {
     public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
         long id = Long.parseLong(targetId.toString());
         String[] permissions = permission.toString().split(",");
-        User user = (User) authentication.getPrincipal();
+        AuthUser user = (AuthUser) authentication.getPrincipal();
 
         for (String p : permissions) {
             boolean anyMatch = user.getAuthorities().stream().anyMatch(authority ->

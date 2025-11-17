@@ -117,8 +117,8 @@ public class ProductControllerTest {
         when(productService.getMyProducts(anyInt(),anyInt())).thenReturn(productPaginationResponse);
 
         MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
-        multiValueMap.add("page", "1");
-        multiValueMap.add("size", "2");
+        multiValueMap.add("page", "0");
+        multiValueMap.add("size", "1");
         this.mockMvc.perform(get("/api/v1/products/me").params(multiValueMap))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.products.size()").value(1));
