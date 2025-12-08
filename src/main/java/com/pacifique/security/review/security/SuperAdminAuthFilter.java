@@ -41,6 +41,7 @@ public class SuperAdminAuthFilter extends OncePerRequestFilter {
 
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (header != null && header.startsWith("Bearer ") && header.strip().substring(7).equals(jwtSuperAdmin.strip())) {
+            System.out.println("header = " + header);
             var manager = new InMemoryUserDetailsManager();
             AuthUser user = AuthUser.getUser(User.builder()
                     .createdAt(LocalDateTime.now())
