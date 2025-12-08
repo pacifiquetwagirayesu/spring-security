@@ -26,4 +26,5 @@ public class UserSecurityConfig {
 
         return new DelegatingPasswordEncoder("bcrypt", encoders);
     }
+
 }
