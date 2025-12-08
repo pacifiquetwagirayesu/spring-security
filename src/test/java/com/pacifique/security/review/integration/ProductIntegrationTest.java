@@ -1,6 +1,6 @@
 package com.pacifique.security.review.integration;
 
-import com.pacifique.security.review.ConfigDatabase;
+import com.pacifique.security.review.config.ConfigDatabase;
 import com.pacifique.security.review.dto.ProductPaginationResponse;
 import com.pacifique.security.review.dto.ProductRequest;
 import com.pacifique.security.review.dto.ProductResponse;

@@ -22,4 +22,11 @@ public class EmailContent implements IEmailContent {
             case DELETE -> emailTemplate.renderEmailTemplate(DELETE_ACCOUNT, user, BASE_LINK);
         };
     }
+
+    @Override
+    public String toString() {
+        return "EmailContent{" +
+                "emailTemplate=" + emailTemplate +
+                '}';
+    }
 }

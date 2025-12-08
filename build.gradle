@@ -44,6 +44,7 @@ dependencies {
     implementation("com.resend.api:sdk:1.5.3")
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation platform('org.testcontainers:testcontainers-bom:2.0.1') //import bom
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.5.1'
     annotationProcessor 'org.projectlombok:lombok'
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.13.0")
     runtimeOnly 'org.postgresql:postgresql'

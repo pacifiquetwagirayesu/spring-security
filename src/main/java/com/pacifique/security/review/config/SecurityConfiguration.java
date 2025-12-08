@@ -44,7 +44,7 @@ public class SecurityConfiguration {
             authorize.requestMatchers(HttpMethod.GET, "/api/*/products/**").permitAll();
             authorize.requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll();
 
-            authorize.requestMatchers(HttpMethod.GET, "/api/*/users").authenticated();
+            authorize.requestMatchers("/api/*/users/**").authenticated();
             authorize.requestMatchers(HttpMethod.POST, "/api/*/products/**").authenticated();
             authorize.requestMatchers(HttpMethod.PATCH, "/api/*/products/**").authenticated();
             authorize.requestMatchers(HttpMethod.PUT, "/api/*/products/**").authenticated();

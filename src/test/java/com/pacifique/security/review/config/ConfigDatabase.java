@@ -1,12 +1,12 @@
-package com.pacifique.security.review;
+package com.pacifique.security.review.config;
 
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 public class ConfigDatabase {
+    private static final PostgreSQLContainer<?> database = new PostgreSQLContainer<>("postgres:15");
 
-    private static final PostgreSQLContainer<?> database = new PostgreSQLContainer<>("postgres:10");
 
     static {
         database.start();
