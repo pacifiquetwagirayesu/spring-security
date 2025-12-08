@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/v1/admin")
 @PreAuthorize("hasRole('SUPER_ADMIN')")
 @Tag(name = "Admin Controller", description = "Operation related to admin")
 public class AdminController {
 
     @GetMapping
-    public String index(Authentication authentication) {
-        return "Admin Controller " + authentication.getName();
+    public String admin(Authentication authentication) {
+        return authentication.getName();
     }
 }
