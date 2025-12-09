@@ -39,7 +39,7 @@ public class SecurityConfiguration {
 //            ));
 //            authorize.requestMatchers(HttpMethod.POST,"/api/v1/users").access(allOf(hasAnyRole("ADMIN"), hasAnyRole("MANAGER")));
             authorize.requestMatchers(WHITE_LIST_URL).permitAll();
-            authorize.requestMatchers("/admin/**").permitAll();
+            authorize.requestMatchers("api/v1/admin/**").authenticated();
             authorize.requestMatchers("/api/*/auth/**").permitAll();
             authorize.requestMatchers(HttpMethod.GET, "/api/*/products/**").permitAll();
             authorize.requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll();

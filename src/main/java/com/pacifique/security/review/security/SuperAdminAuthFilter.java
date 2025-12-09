@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,7 +40,6 @@ public class SuperAdminAuthFilter extends OncePerRequestFilter {
 
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (header != null && header.startsWith("Bearer ") && header.strip().substring(7).equals(jwtSuperAdmin.strip())) {
-            System.out.println("header = " + header);
             var manager = new InMemoryUserDetailsManager();
             AuthUser user = AuthUser.getUser(User.builder()
                     .createdAt(LocalDateTime.now())

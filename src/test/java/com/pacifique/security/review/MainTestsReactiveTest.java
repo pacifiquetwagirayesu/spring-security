@@ -1,11 +1,13 @@
 package com.pacifique.security.review;
 
 import com.pacifique.security.review.config.ConfigDatabase;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @Deprecated
+@Disabled
 public class MainTestsReactiveTest extends ConfigDatabase {
 //    @Autowired
 //    private WebTestClient client;

@@ -25,6 +25,10 @@ configurations {
     }
 }
 
+configurations.all {
+    exclude group: 'commons-logging', module: 'commons-logging'
+}
+
 repositories {
     mavenCentral()
 }
@@ -34,7 +38,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation'org.springframework.boot:spring-boot-starter-web'
     implementation("org.springframework.security:spring-security-data")
     implementation("io.jsonwebtoken:jjwt-jackson:0.13.0")
     implementation("io.jsonwebtoken:jjwt-api:0.13.0")
@@ -48,6 +52,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.13.0")
     runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.38.0'
+    implementation 'org.seleniumhq.selenium:htmlunit-driver:4.13.0'
     developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation "org.testcontainers:testcontainers-postgresql:2.0.1"

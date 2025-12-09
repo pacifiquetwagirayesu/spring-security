@@ -35,12 +35,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-
-        if (header != null && header.startsWith("Bearer ")
-                && header.substring(7).strip().equals(jwtSuperAdmin.strip())) {
-            filterChain.doFilter(request, response);
-            return;
-        }
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.strip().substring(7);
             String username = jwtService.getUsername(token);
@@ -60,11 +54,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-
-        log.info("Authorization header received: {}", header);
         doFilter(request, response, filterChain);
 
     }
 
-
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String servletPath = request.getServletPath();
+        return servletPath.equals("/api/v1/admin");
+    }
 }

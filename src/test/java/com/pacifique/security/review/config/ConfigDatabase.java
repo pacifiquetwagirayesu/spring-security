@@ -7,7 +7,6 @@ import org.testcontainers.containers.PostgreSQLContainer;
 public class ConfigDatabase {
     private static final PostgreSQLContainer<?> database = new PostgreSQLContainer<>("postgres:15");
 
-
     static {
         database.start();
     }
