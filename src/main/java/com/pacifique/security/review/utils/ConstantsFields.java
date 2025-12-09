@@ -26,6 +26,8 @@ public final class ConstantsFields {
             "/swagger-ui/**",
             "/webjars/**",
             "/swagger-ui.html",
-            "/api-docs"
+            "/api-docs",
+            "swagger-ui/index.html#",
+            "/*"
     };
 }

@@ -36,7 +36,7 @@ public class UserController {
      *
      * @return List of UserResponse
      */
-    @Operation(summary = "Get  Users", description = "Returns a list of users")
+    @Operation(summary = "Get  Users", tags = {"Get Action"}, description = "Returns a list of users")
     @ApiResponse(
             responseCode = "200", description = "Users found",
             content = @Content(schema = @Schema(implementation = UserResponse.class)))
@@ -47,16 +47,19 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(tags = {"Post Action"})
     public String createUser(@RequestBody UserRequest req) {
         return userService.createUser(req);
     }
 
     @PatchMapping("/{id}")
+    @Operation(tags = {"Update Action"})
     public Map<String, String> updateUserRole(@PathVariable("id") long id, @RequestParam String role) {
         return userService.updateUserRole(id, role);
     }
 
     @DeleteMapping("/{id}")
+    @Operation(tags = {"Delete Action"})
     public String deleteUserById(@PathVariable("id") long id) {
         return userService.deleteUserById(id);
     }

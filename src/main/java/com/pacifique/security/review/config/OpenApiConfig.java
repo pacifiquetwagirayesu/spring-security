@@ -24,7 +24,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
                         url = "https://commitlink.org"
                 ),
                 description = "OpenApi documentation for spring security",
-                title = "OpenApi specification - Paccy",
+                title = "OpenApi specification - Spring Security",
                 version = "1.0",
                 license = @License(
                         name = "Licence name",

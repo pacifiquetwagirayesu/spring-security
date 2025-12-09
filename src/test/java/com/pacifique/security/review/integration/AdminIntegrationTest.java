@@ -1,7 +1,6 @@
 package com.pacifique.security.review.integration;
 
 import com.pacifique.security.review.config.ConfigDatabase;
-import com.pacifique.security.review.security.JwtAuthenticationFilter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,11 +9,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -37,8 +38,19 @@ public class AdminIntegrationTest extends ConfigDatabase {
     @Test
     @DisplayName("Integration Test for admin")
     void adminIntegrationTest() {
-        // Not Complete
-       assertNotNull(jwtSuperAdmin);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(jwtSuperAdmin);
+        HttpEntity<Void> entity = new HttpEntity<>(headers);
+
+        var res = restTemplate.exchange(baseUrl, HttpMethod.GET,
+                entity, new ParameterizedTypeReference<Map<String, String>>() {
+                });
+        assertNotNull(res);
+        assertEquals(HttpStatus.OK, res.getStatusCode());
+        assertNotNull(res.getBody());
+        assertEquals("admin@gmail.com", res.getBody().get("user"));
+
     }
+
 
 }

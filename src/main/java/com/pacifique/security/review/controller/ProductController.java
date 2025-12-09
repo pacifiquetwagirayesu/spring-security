@@ -4,6 +4,7 @@ import com.pacifique.security.review.dto.ProductPaginationResponse;
 import com.pacifique.security.review.dto.ProductRequest;
 import com.pacifique.security.review.dto.ProductResponse;
 import com.pacifique.security.review.services.IProductService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,33 +29,39 @@ public class ProductController {
     private final IProductService productService;
 
     @GetMapping
+    @Operation(tags = {"Get Action"})
     public Iterable<ProductResponse> getProducts(@RequestParam int page, @RequestParam int size) {
         return productService.getProducts(page, size);
     }
 
     @GetMapping("/{id}")
+    @Operation(tags = {"Get Action"})
     public ProductResponse getProductById(@PathVariable Long id) {
         return productService.getProductById(id);
     }
 
     @GetMapping("/me")
+    @Operation(tags = {"Get Action"})
     public ProductPaginationResponse getMyProducts(@RequestParam int page, @RequestParam int size) {
         return productService.getMyProducts(page, size);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(tags = {"Post Action"})
     public ProductResponse addProduct(@RequestBody ProductRequest req) {
         return productService.addProduct(req);
     }
 
     @PostMapping("/all")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(tags = {"Post Action"})
     public Iterable<ProductResponse> addProduct(@RequestBody List<ProductRequest> req) {
         return productService.addProducts(req);
     }
 
     @DeleteMapping("/{id}")
+    @Operation(tags = {"Delete Action"})
     public Map<String, String> deleteProduct(@PathVariable long id) {
         return productService.deleteProduct(id);
     }
