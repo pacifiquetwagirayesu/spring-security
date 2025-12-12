@@ -13,7 +13,11 @@ import java.util.List;
 public interface IProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAll();
 
-    @Query(value = " SELECT p FROM Product p WHERE p.owner.email=?#{authentication.name} ")
+    @Query(value = """  
+    SELECT p \
+    FROM Product p \
+    WHERE p.owner.email=?#{authentication.name}
+    """)
     Page<Product> findAllByOwner_Email(Pageable pageable);
 
 }
