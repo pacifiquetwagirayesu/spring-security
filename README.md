@@ -3,7 +3,7 @@
 This project is a secure backend application built using **Java 17**, **Spring Boot**, **PostgreSQL**, and **Gradle**.  
 It demonstrates an enterprise-grade security implementation featuring **stateful JWT authentication**, custom permission logic, method-level authorization, and CI/CD with Docker image deployment.
 
-🌐 **Live Demo:** [http://15.237.217.26/](http://15.237.217.26/)
+🌐 **Live Demo:** [http://51.44.171.166/](http://51.44.171.166/)
 
 📚 **API Documentation:** Click the "View API Documentation" button to access Swagger UI
 
