@@ -31,6 +31,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 termsOfService = "Terms of Service"
         ),
         servers = {
+                @Server(description = "Prod Env", url = "http://15.237.217.26/"),
                 @Server(description = "local env", url = "http://localhost"),
                 @Server(description = "Test env", url = "https://dev.example.org")
         },
