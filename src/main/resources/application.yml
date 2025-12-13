@@ -41,6 +41,9 @@ spring:
       on-profile: docker
   datasource:
     url: ${SPRING_DATASOURCE_URL}
+  jpa:
+    hibernate:
+      ddl-auto: none
 
 logging:
   level:

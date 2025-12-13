@@ -2,6 +2,7 @@ package com.pacifique.security.review.services;
 
 import com.pacifique.security.review.dto.UserRequest;
 import com.pacifique.security.review.dto.UserResponse;
+import com.pacifique.security.review.exception.UserNotFound;
 import com.pacifique.security.review.model.Role;
 import com.pacifique.security.review.model.User;
 import com.pacifique.security.review.proxies.IEmailProxies;
@@ -59,7 +60,7 @@ public class UserService implements IUserService {
     @PreAuthorize("hasAnyRole('ADMIN')")
     public Map<String, String> updateUserRole(Long id, String role) {
         String roleUpperCase = role.toUpperCase();
-        User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("user not found"));
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFound("user not found"));
 
         if (!(Role.valueOf(roleUpperCase).toString().equals(user.getRole()))) {
             user.setRole(roleUpperCase);

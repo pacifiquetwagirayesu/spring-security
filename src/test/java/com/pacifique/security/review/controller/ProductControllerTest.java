@@ -17,6 +17,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,6 +32,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+import static com.pacifique.security.review.utils.Utility.convertProductResponse;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
@@ -95,16 +101,26 @@ public class ProductControllerTest {
     @Test
     @DisplayName("Test Getting product List Endpoint")
     void getProductsTest() throws Exception {
+        PageRequest pageRequest = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Page<Product> productPage = new PageImpl<>(List.of(product));
+
+        List<ProductResponse> productResponses = productPage.getContent()
+                .stream().map(product -> convertProductResponse().apply(product)).toList();
+
+        PagedModel<ProductResponse> responsePagedModel = new PagedModel<>(new PageImpl<>(productResponses, pageRequest, productPage.getTotalElements()));
+
         productResponse = Utility.convertProductResponse().apply(product);
-        when(productService.getProducts(anyInt(),anyInt())).thenReturn(List.of(productResponse));
+        when(productService.getProducts(anyInt(),anyInt())).thenReturn(responsePagedModel);
 
         this.mockMvc.perform(get("/api/v1/products")
-                        .param("page", "1")
-                        .param("size", "2")
+                        .param("page", "0")
+                        .param("size", "5")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$.size()").value(1));
+                .andExpect(jsonPath("$.content[0].id").value(1))
+                .andExpect(jsonPath("$.content.size()").value(1))
+                .andExpect(jsonPath("$.page.totalElements").value(1))
+                .andExpect(jsonPath("$.page.totalPages").value(1));
     }
 
     @Test
@@ -117,7 +133,7 @@ public class ProductControllerTest {
         MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
         multiValueMap.add("page", "0");
         multiValueMap.add("size", "1");
-        this.mockMvc.perform(get("/api/v1/products/me").params(multiValueMap))
+        this.mockMvc.perform(get("/api/v1/products/my-products").params(multiValueMap))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.products.size()").value(1));
     }

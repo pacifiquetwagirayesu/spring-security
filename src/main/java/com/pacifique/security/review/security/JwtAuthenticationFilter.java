@@ -25,8 +25,6 @@ import java.util.Set;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final IJwtService jwtService;
     private final UserDetailsServiceImpl userDetailsService;
-    @Value("${security.jwt.super-admin}")
-    private String jwtSuperAdmin;
 
     @Override
     protected void doFilterInternal(

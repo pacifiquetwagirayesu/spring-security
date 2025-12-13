@@ -3,6 +3,7 @@ package com.pacifique.security.review.services;
 import com.pacifique.security.review.dto.ProductPaginationResponse;
 import com.pacifique.security.review.dto.ProductRequest;
 import com.pacifique.security.review.dto.ProductResponse;
+import com.pacifique.security.review.exception.ProductNotFound;
 import com.pacifique.security.review.model.Product;
 import com.pacifique.security.review.model.Role;
 import com.pacifique.security.review.model.User;
@@ -21,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PagedModel;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -85,9 +87,9 @@ public class ProductServiceTest {
 
     @Test
     void getProductsTest() {
-        PageRequest pageRequest = PageRequest.of(1, 2, Sort.by(Sort.Direction.DESC, "name"));
+        PageRequest pageRequest = PageRequest.of(0, 2, Sort.by(Sort.Direction.DESC, "createdAt"));
         when(productRepository.findAll(pageRequest)).thenReturn(pageable);
-        Iterable<ProductResponse> products = productService.getProducts(1, 2);
+        PagedModel<ProductResponse> products = productService.getProducts(0, 2);
         assertNotNull(products);
     }
 
@@ -111,7 +113,7 @@ public class ProductServiceTest {
     @Test
     void productNotFoundTest() {
         when(productRepository.findById(anyLong())).thenReturn(Optional.empty());
-        assertThrows(EntityNotFoundException.class, () -> productService.getProductById(1L), "Product not found");
+        assertThrows(ProductNotFound.class, () -> productService.getProductById(1L), "Product not found");
     }
 
     @Test

@@ -18,7 +18,7 @@ public class HttpFilterErrorMessage {
         res.getWriter().write(
                 "{" +
                         "\"message\" : \"" + ex.getMessage() + "\" ,"
-                        + "\"status\"" + ":" + res.getStatus() + " ,"
+                        + "\"status\"" + ":" + HttpStatus.INTERNAL_SERVER_ERROR + " ,"
                         + "\"path\": \"" + req.getServletPath() + "\" ,"
                         + "\"timestamp\" : \"" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "\"" +
 

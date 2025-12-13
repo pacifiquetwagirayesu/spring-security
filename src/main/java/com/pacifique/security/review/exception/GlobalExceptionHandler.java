@@ -28,20 +28,18 @@ public class GlobalExceptionHandler {
             InvalidDataAccessResourceUsageException.class,
             DataIntegrityViolationException.class,
             HttpMessageNotReadableException.class,
-            InvalidToken.class
+            InvalidToken.class,
+            MissingServletRequestParameterException.class,
+            IllegalArgumentException.class,
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public HttpMessage exceptionHandler(Exception ex, HttpServletRequest req) {
         return new HttpMessage(ex.getMessage(), HttpServletResponse.SC_BAD_REQUEST, req.getServletPath());
     }
 
-    @ExceptionHandler({
-            NoResourceFoundException.class,
-            MissingServletRequestParameterException.class,
-            IllegalArgumentException.class,
-    })
+    @ExceptionHandler(UserNotFound.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public HttpMessage exceptionHandler(ServletException ex, HttpServletRequest req) {
+    public HttpMessage exceptionHandler(NotFoundException ex, HttpServletRequest req) {
         return new HttpMessage(ex.getMessage(), HttpServletResponse.SC_NOT_FOUND, req.getServletPath());
     }
 
@@ -49,7 +47,8 @@ public class GlobalExceptionHandler {
             ClassCastException.class,
             SpelParseException.class,
             EntityNotFoundException.class,
-            HttpMessageConversionException.class
+            HttpMessageConversionException.class,
+
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public HttpMessage exceptionHandler(RuntimeException ex, HttpServletRequest req) {
