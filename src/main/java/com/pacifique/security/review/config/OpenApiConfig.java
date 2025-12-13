@@ -17,12 +17,12 @@ import io.swagger.v3.oas.annotations.servers.Server;
 @OpenAPIDefinition(
         info = @Info(
                 contact = @Contact(
-                        name = "Paccy",
+                        name = "",
                         email = "dev@commitlink.org",
                         url = "https://commitlink.org"
                 ),
-                description = "OpenApi documentation for spring security",
-                title = "OpenApi specification - Spring Security",
+                description = "OpenApi documentation",
+                title = "OpenApi specification - Backed Spring Security",
                 version = "1.0",
                 license = @License(
                         name = "Licence name",
@@ -78,5 +78,5 @@ import io.swagger.v3.oas.annotations.servers.Server;
 
 public class OpenApiConfig {
 
-    // Oauth authentication not completed
+    // oauth2 authentication not completed
 }
