@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pacifique.security.review.services.AuthUserServiceTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2025-12-13T04:17:17.108Z" hostname="Pacifiques-MacBook-Air.local" time="0.388">
+  <properties/>
+  <testcase name="test Valid User credentials" classname="com.pacifique.security.review.services.AuthUserServiceTest" time="0.28"/>
+  <testcase name="Test Invalid User Credentials" classname="com.pacifique.security.review.services.AuthUserServiceTest" time="0.004"/>
+  <testcase name="Test Log in User not found" classname="com.pacifique.security.review.services.AuthUserServiceTest" time="0.09"/>
+  <testcase name="Test Valid user credentials but invalid Token" classname="com.pacifique.security.review.services.AuthUserServiceTest" time="0.008"/>
+  <testcase name="Test Log In User" classname="com.pacifique.security.review.services.AuthUserServiceTest" time="0.004"/>
+  <system-out><![CDATA[invocation = Token(id=0, userId=0, token=token, refreshToken=refreshToken)
+2025-12-13T12:17:17.492+08:00  INFO 23847 --- [backend security] [    Test worker] c.p.s.review.services.AuthUserService    : loading a new token for user 0
+2025-12-13T12:17:17.492+08:00  INFO 23847 --- [backend security] [    Test worker] c.p.s.review.services.AuthUserService    : Access Token loaded: new Token
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

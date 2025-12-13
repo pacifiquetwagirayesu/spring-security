@@ -1,0 +1,50 @@
+
+spring:
+  application:
+    name: backend security
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+logging:
+  level:
+    root: info
+    web: error
+    com.pacifique.security.review.controller: debug
+
+resend:
+  api-key: ${RESEND_API-KEY}
+  api-url: https://api.resend.com/emails
+  from: ${RESEND_FROM}
+security:
+  jwt:
+    secret-key: ${SECURITY_JWT_SECRET-KEY}
+    expiration: 86400000
+    refresh-token:
+      expiration: 604800000
+    super-admin: ${SECURITY_JWT_SUPER-ADMIN}
+
+
+springdoc:
+  swagger-ui:
+    path: /api-docs
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+logging:
+  level:
+    root: info
