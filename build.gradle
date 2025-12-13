@@ -42,6 +42,8 @@ dependencies {
     implementation 'org.postgresql:postgresql:42.7.8'
     implementation("com.resend:resend-java:4.6.0")
     implementation("com.resend.api:sdk:1.5.3")
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-database-postgresql'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation platform('org.testcontainers:testcontainers-bom:2.0.1') //import bom
     implementation 'org.apache.httpcomponents.client5:httpclient5:5.5.1'
