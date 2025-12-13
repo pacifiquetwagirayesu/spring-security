@@ -1,7 +1,9 @@
 version: '3.0'
 services:
   main:
-    build: .
+#    build: .
+    image: paccy/backend-spring-security
+    container_name: backend-security
     env_file:
       .env
     depends_on:
