@@ -32,7 +32,8 @@ import io.swagger.v3.oas.annotations.servers.Server;
         ),
         servers = {
                 @Server(description = "Prod Env", url = "http://51.44.171.166"),
-                @Server(description = "local env", url = "http://localhost"),
+                @Server(description = "Docker Env", url = "http://localhost"),
+                @Server(description = "Local env", url = "http://localhost:8080"),
                 @Server(description = "Test env", url = "https://dev.example.org")
         },
         security = {
