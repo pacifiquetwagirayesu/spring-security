@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -63,6 +64,9 @@ public class AuthUserService implements IAuthUserService {
     @PostAuthorize("returnObject.email == authentication.principal.username")
     public UserResponse loggedInUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (email == null || email.equals("anonymousUser"))
+            throw new AuthorizationDeniedException("Please Login, and Try again");
+
         User user = userRepository.findByEmail(email).orElseThrow(()
                 -> new UserNotFound("User not found"));
         return convertUserResponse().apply(user);

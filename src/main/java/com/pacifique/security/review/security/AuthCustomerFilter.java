@@ -18,14 +18,9 @@ public class AuthCustomerFilter implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        String header = request.getHeader("Authorization");
         int status = response.getStatus();
 
-        if (status == HttpServletResponse.SC_UNAUTHORIZED || (header == null || !header.startsWith("Bearer "))) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            generateResponse(response, request, authException);
-        } else if (status == HttpServletResponse.SC_FORBIDDEN) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        if (status == HttpServletResponse.SC_INTERNAL_SERVER_ERROR) {
             generateResponse(response, request, authException);
         }
 

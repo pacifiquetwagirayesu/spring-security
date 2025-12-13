@@ -3,6 +3,7 @@ package com.pacifique.security.review.services;
 import com.pacifique.security.review.dto.ProductPaginationResponse;
 import com.pacifique.security.review.dto.ProductRequest;
 import com.pacifique.security.review.dto.ProductResponse;
+import com.pacifique.security.review.exception.ProductNotFound;
 import com.pacifique.security.review.exception.UserNotFound;
 import com.pacifique.security.review.model.Product;
 import com.pacifique.security.review.model.User;
@@ -13,8 +14,10 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PagedModel;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -35,16 +38,20 @@ public class ProductService implements IProductService {
     private final IUserRepository userRepository;
 
     @Override
-    public Iterable<ProductResponse> getProducts(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "name"));
+    public PagedModel<ProductResponse> getProducts(int page, int size) {
+        int pageNumberIndex = Math.max(0, (page - 1));
+        PageRequest pageRequest = PageRequest.of(pageNumberIndex, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         Page<Product> productPage = productRepository.findAll(pageRequest);
-        List<Product> all = productPage.getContent();
-        return all.stream().map(product -> convertProductResponse().apply(product)).toList();
+
+        List<ProductResponse> productResponses = productPage.getContent()
+                .stream().map(product -> convertProductResponse().apply(product)).toList();
+
+        return new PagedModel<>(new PageImpl<>(productResponses, pageRequest, productPage.getTotalElements()));
     }
 
     @Override
     public ProductResponse getProductById(Long id) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product not found"));
+        Product product = productRepository.findById(id).orElseThrow(() -> new ProductNotFound("Product not found"));
         return convertProductResponse().apply(product);
     }
 
