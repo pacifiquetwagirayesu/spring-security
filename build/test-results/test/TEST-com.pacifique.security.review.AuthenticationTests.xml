@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pacifique.security.review.AuthenticationTests" tests="9" skipped="9" failures="0" errors="0" timestamp="2025-12-13T04:16:49.812Z" hostname="Pacifiques-MacBook-Air.local" time="0.002">
+  <properties/>
+  <testcase name="loggingInWithCorrectAuthority()" classname="com.pacifique.security.review.AuthenticationTests" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testHelloPOSTWithCSRF()" classname="com.pacifique.security.review.AuthenticationTests" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="helloAuthenticatingWithValidUser()" classname="com.pacifique.security.review.AuthenticationTests" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="helloAuthenticatingWithInvalidUser()" classname="com.pacifique.security.review.AuthenticationTests" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testCORSForTestEndpoint()" classname="com.pacifique.security.review.AuthenticationTests" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="demoEndpointSuccessfulAuthenticationTest()" classname="com.pacifique.security.review.AuthenticationTests" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="loggingInWithWrongAuthority()" classname="com.pacifique.security.review.AuthenticationTests" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testHelloPOST()" classname="com.pacifique.security.review.AuthenticationTests" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="demoOpaqueEndpointSuccessfulAuthenticationTest()" classname="com.pacifique.security.review.AuthenticationTests" time="0.0">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

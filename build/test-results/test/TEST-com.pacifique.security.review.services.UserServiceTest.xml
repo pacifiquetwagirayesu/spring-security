@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pacifique.security.review.services.UserServiceTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2025-12-13T04:17:17.725Z" hostname="Pacifiques-MacBook-Air.local" time="0.167">
+  <properties/>
+  <testcase name="updateUserWithDifferentRoleTest()" classname="com.pacifique.security.review.services.UserServiceTest" time="0.152"/>
+  <testcase name="getAllUsersTest()" classname="com.pacifique.security.review.services.UserServiceTest" time="0.002"/>
+  <testcase name="updateUserWithSameRoleTest()" classname="com.pacifique.security.review.services.UserServiceTest" time="0.001"/>
+  <testcase name="createUserTest()" classname="com.pacifique.security.review.services.UserServiceTest" time="0.008"/>
+  <testcase name="deleteUserById()" classname="com.pacifique.security.review.services.UserServiceTest" time="0.002"/>
+  <system-out><![CDATA[2025-12-13T12:17:17.877+08:00  INFO 23847 --- [backend security] [    Test worker] c.p.s.review.services.UserService        : User role updated: ADMIN
+2025-12-13T12:17:17.889+08:00  INFO 23847 --- [backend security] [    Test worker] c.p.s.review.services.UserService        : User created: user@mail
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

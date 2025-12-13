@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlayGroundClass.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-security</a> &gt; <a href="index.source.html" class="el_package">com.pacifique.security.review.utils</a> &gt; <span class="el_source">PlayGroundClass.java</span></div><h1>PlayGroundClass.java</h1><pre class="source lang-java linenums">package com.pacifique.security.review.utils;
+
+import com.pacifique.security.review.model.User;
+import com.pacifique.security.review.proxies.NewAccountEmailServiceProxy;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.util.Date;
+
+<span class="nc" id="L9">public class PlayGroundClass {</span>
+    public static void main(String[] args) {
+//        Runnable task  = () -&gt;{
+//            System.out.println(&quot;args&quot;);
+//        };
+//
+//        ExecutorService exs = Executors.newFixedThreadPool(1);
+//        try {
+//            exs.submit(task);
+//        }catch (RejectedExecutionException e) {
+//            System.out.println(&quot;e = &quot; + e);
+//        }finally {
+//            exs.shutdown();
+//        }
+
+//        Role[] values = Role.values();
+//        System.out.println(&quot;Arrays.asList(values) = &quot; + Arrays.asList(values));
+//        for (Role role : values) {
+//            boolean delete = role.hasPermission(&quot;delete&quot;);
+//            System.out.println(&quot;role = &quot; + delete);
+//        }
+
+//        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+//                &quot;admin&quot;, &quot;admin&quot;,
+//                Arrays.asList(
+//                        new SimpleGrantedAuthority(PREFIX + MANAGER)));
+//        SecurityContextHolder.getContext().setAuthentication(token);
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        System.out.println(&quot;authentication = &quot; + authentication);
+//        Collection&lt;? extends GrantedAuthority&gt; authorities = authentication.getAuthorities();
+//        for (GrantedAuthority grantedAuthority : authorities) {
+//            String replaced = grantedAuthority.getAuthority().replace(PREFIX, &quot;&quot;);
+//            boolean permission = Role.valueOf(replaced).hasPermission(&quot;read&quot;);
+//            System.out.println(&quot;permission = &quot; + permission);
+//        }
+
+//        byte[] encoded = Base64.getEncoder().encode(&quot;hello world security review&quot;.getBytes());
+//        String s = new String(encoded);
+//        System.out.println(&quot;s = &quot; + s);
+
+//        String superAdmin = &quot;superAdminpermissionsuperAdminpermissionsuperAdminpermission&quot;;
+//        byte[] bytes = Base64.encodeBase64(superAdmin.getBytes(), true);
+//        System.out.println(&quot;new String(bytes) = &quot; + new String(bytes));
+//
+//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//
+//        String encode = passwordEncoder.encode(&quot;password&quot;);
+//
+//        System.out.println(&quot;encode = &quot; + encode);
+
+<span class="nc" id="L59">        Date date = new Date(System.currentTimeMillis() + 60000);</span>
+<span class="nc" id="L60">        System.out.println(&quot;date = &quot; + date);</span>
+
+//        var context = new AnnotationConfigApplicationContext(SpringSecurityReviewApplication.class);
+//        PasswordEncoder passwordEncoder = context.getBean(PasswordEncoder.class);
+//        String encode = passwordEncoder.encode(&quot;password&quot;);
+//        System.out.println(&quot;passwordEncoder = &quot; + encode);
+//        var jwtObj = new AnnotationConfigApplicationContext(JwtService.class);
+//        JwtService jwtService = jwtObj.getBean(JwtService.class);
+//        AuthUser authUser = AuthUser.getUser(User.builder().email(&quot;email&quot;)
+//                    .id(1L)
+//                        .role(Role.ADMIN.name())
+//                        .firstName(&quot;admin&quot;)
+//                        .lastName(&quot;user&quot;)
+//                .password(passwordEncoder.encode(&quot;pass&quot;))
+//                .permissions(Role.ADMIN.getPermissions())
+//                .build());
+//        String generatedToken = jwtService.generateToken(authUser);
+//        System.out.println(&quot;generatedToken = &quot; + generatedToken);
+
+<span class="nc" id="L79">        var context = new AnnotationConfigApplicationContext(NewAccountEmailServiceProxy.class);</span>
+<span class="nc" id="L80">        NewAccountEmailServiceProxy serviceProxy = context.getBean(NewAccountEmailServiceProxy.class);</span>
+
+<span class="nc" id="L82">        serviceProxy.accountActivityNotification(User.builder()</span>
+<span class="nc" id="L83">                .lastName(&quot;last&quot;).firstName(&quot;first&quot;).email(&quot;emailtwo&quot;)</span>
+<span class="nc" id="L84">                .build());</span>
+
+
+<span class="nc" id="L87">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pacifique.security.review.integration.UserIntegrationTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2025-12-13T04:17:15.908Z" hostname="Pacifiques-MacBook-Air.local" time="1.196">
+  <properties/>
+  <testcase name="Integration Test Creating a User" classname="com.pacifique.security.review.integration.UserIntegrationTest" time="0.339"/>
+  <testcase name="Integration Test Integration get List users" classname="com.pacifique.security.review.integration.UserIntegrationTest" time="0.344"/>
+  <testcase name="Integration Test updating User role" classname="com.pacifique.security.review.integration.UserIntegrationTest" time="0.511"/>
+  <system-out><![CDATA[2025-12-13T12:17:15.901+08:00  INFO 23847 --- [backend security] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.pacifique.security.review.integration.UserIntegrationTest]: UserIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-12-13T12:17:15.905+08:00  INFO 23847 --- [backend security] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.pacifique.security.review.SpringSecurityReviewApplication for test class com.pacifique.security.review.integration.UserIntegrationTest
+Hibernate: select p1_0.id,p1_0.created_at,p1_0.description,p1_0.name,p1_0.owner_id,p1_0.updated_at from product p1_0
+Hibernate: delete from product where id=?
+Hibernate: delete from product where id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.permissions,u1_0.role,u1_0.updated_at from users u1_0
+Hibernate: delete from users where id=?
+Hibernate: insert into users (created_at,email,first_name,last_name,password,permissions,role,updated_at) values (?,?,?,?,?,?,?,?)
+Hibernate: insert into users (created_at,email,first_name,last_name,password,permissions,role,updated_at) values (?,?,?,?,?,?,?,?)
+2025-12-13T12:17:16.238+08:00  INFO 23847 --- [backend security] [o-auto-1-exec-6] c.p.s.review.services.UserService        : User created: user12@gmail.com
+2025-12-13T12:17:16.240+08:00  INFO 23847 --- [backend security] [fication Thread] c.p.s.r.p.NewAccountEmailServiceProxy    : Email Content = EmailContent{emailTemplate=com.pacifique.security.review.proxies.EmailTemplate@4ead7f0b}
+2025-12-13T12:17:16.241+08:00  INFO 23847 --- [backend security] [fication Thread] c.p.s.r.p.NewAccountEmailServiceProxy    : Sending Done ✅
+2025-12-13T12:17:16.241+08:00  INFO 23847 --- [backend security] [fication Thread] c.p.s.r.p.NewAccountEmailServiceProxy    : Ended : New account notification Thread ]]>&#x1f44c;<![CDATA[✅
+2025-12-13T12:17:16.241+08:00  INFO 23847 --- [backend security] [o-auto-1-exec-6] c.p.s.r.p.NewAccountEmailServiceProxy    : task executed: success
+Hibernate: select p1_0.id,p1_0.created_at,p1_0.description,p1_0.name,p1_0.owner_id,p1_0.updated_at from product p1_0
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.permissions,u1_0.role,u1_0.updated_at from users u1_0
+Hibernate: delete from users where id=?
+Hibernate: delete from users where id=?
+Hibernate: insert into users (created_at,email,first_name,last_name,password,permissions,role,updated_at) values (?,?,?,?,?,?,?,?)
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.permissions,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.email=?
+Hibernate: select t1_0.id,t1_0.refresh_token,t1_0.token,t1_0.user_id from token t1_0 where t1_0.user_id=?
+Hibernate: insert into token (refresh_token,token,user_id) values (?,?,?)
+2025-12-13T12:17:16.571+08:00  INFO 23847 --- [backend security] [o-auto-1-exec-7] c.p.s.review.services.AuthUserService    : loading a new token for user 12
+2025-12-13T12:17:16.571+08:00  INFO 23847 --- [backend security] [o-auto-1-exec-7] c.p.s.review.services.AuthUserService    : Access Token loaded: eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJyZWFkIn0seyJhdXRob3JpdHkiOiJkZWxldGUifSx7ImF1dGhvcml0eSI6IndyaXRlIn1dLCJzdWIiOiJ1c2VyQGdtYWlsLmNvbSIsImlzcyI6ImYgbCIsImlhdCI6MTc2NTU5OTQzNiwiZXhwIjoxNzY1NTk5NDY2fQ.hfar_z3EkTlijFpxXUrPblbfHQIhx60Eamq9ZfXYi5HbKhGHEIUmli3L-X-I0qPp
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.permissions,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.email=?
+2025-12-13T12:17:16.580+08:00  INFO 23847 --- [backend security] [o-auto-1-exec-8] c.p.s.r.s.JwtAuthenticationFilter        : Authenticated : true
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.permissions,u1_0.role,u1_0.updated_at from users u1_0
+Hibernate: select p1_0.id,p1_0.created_at,p1_0.description,p1_0.name,p1_0.owner_id,p1_0.updated_at from product p1_0
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.permissions,u1_0.role,u1_0.updated_at from users u1_0
+Hibernate: delete from users where id=?
+Hibernate: insert into users (created_at,email,first_name,last_name,password,permissions,role,updated_at) values (?,?,?,?,?,?,?,?)
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.permissions,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.email=?
+Hibernate: select t1_0.id,t1_0.refresh_token,t1_0.token,t1_0.user_id from token t1_0 where t1_0.user_id=?
+Hibernate: insert into token (refresh_token,token,user_id) values (?,?,?)
+2025-12-13T12:17:16.914+08:00  INFO 23847 --- [backend security] [o-auto-1-exec-9] c.p.s.review.services.AuthUserService    : loading a new token for user 13
+2025-12-13T12:17:16.914+08:00  INFO 23847 --- [backend security] [o-auto-1-exec-9] c.p.s.review.services.AuthUserService    : Access Token loaded: eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJyZWFkIn0seyJhdXRob3JpdHkiOiJkZWxldGUifSx7ImF1dGhvcml0eSI6IndyaXRlIn1dLCJzdWIiOiJ1c2VyQGdtYWlsLmNvbSIsImlzcyI6ImYgbCIsImlhdCI6MTc2NTU5OTQzNiwiZXhwIjoxNzY1NTk5NDY2fQ.hfar_z3EkTlijFpxXUrPblbfHQIhx60Eamq9ZfXYi5HbKhGHEIUmli3L-X-I0qPp
+Hibernate: insert into users (created_at,email,first_name,last_name,password,permissions,role,updated_at) values (?,?,?,?,?,?,?,?)
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.permissions,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.email=?
+2025-12-13T12:17:17.075+08:00  INFO 23847 --- [backend security] [-auto-1-exec-10] c.p.s.r.s.JwtAuthenticationFilter        : Authenticated : true
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.permissions,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+Hibernate: update users set created_at=?,email=?,first_name=?,last_name=?,password=?,permissions=?,role=?,updated_at=? where id=?
+2025-12-13T12:17:17.092+08:00  INFO 23847 --- [backend security] [-auto-1-exec-10] c.p.s.review.services.UserService        : User role updated: MANAGER
+2025-12-13T12:17:17.093+08:00  INFO 23847 --- [backend security] [fication Thread] c.p.s.r.p.UpdateAccountEmailServiceProxy : Starting email services: Update account notification Thread
+2025-12-13T12:17:17.093+08:00  INFO 23847 --- [backend security] [fication Thread] c.p.s.r.p.UpdateAccountEmailServiceProxy : fromUser: AuthUser{id=13username='user@gmail.com', firstName='f', lastName='l', role=ROLE_ADMIN, permissions=[read, delete, write]}
+2025-12-13T12:17:17.095+08:00  INFO 23847 --- [backend security] [fication Thread] c.p.s.r.p.UpdateAccountEmailServiceProxy : Email content: EmailContent{emailTemplate=com.pacifique.security.review.proxies.EmailTemplate@4ead7f0b}
+2025-12-13T12:17:17.096+08:00  INFO 23847 --- [backend security] [fication Thread] c.p.s.r.p.UpdateAccountEmailServiceProxy : Sending Email Done ✅
+2025-12-13T12:17:17.096+08:00  INFO 23847 --- [backend security] [fication Thread] c.p.s.r.p.UpdateAccountEmailServiceProxy : Ended : Update account notification Thread ]]>&#x1f44c;<![CDATA[✅
+2025-12-13T12:17:17.096+08:00  INFO 23847 --- [backend security] [-auto-1-exec-10] c.p.s.r.p.UpdateAccountEmailServiceProxy : task executed: success
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.permissions,u1_0.role,u1_0.updated_at from users u1_0 where u1_0.id=?
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthUserService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-security</a> &gt; <a href="index.source.html" class="el_package">com.pacifique.security.review.services</a> &gt; <span class="el_source">AuthUserService.java</span></div><h1>AuthUserService.java</h1><pre class="source lang-java linenums">package com.pacifique.security.review.services;
+
+import com.pacifique.security.review.dto.UserLoginRequest;
+import com.pacifique.security.review.dto.UserLoginResponse;
+import com.pacifique.security.review.dto.UserResponse;
+import com.pacifique.security.review.exception.UserNotFound;
+import com.pacifique.security.review.model.Token;
+import com.pacifique.security.review.model.User;
+import com.pacifique.security.review.repository.ITokenRepository;
+import com.pacifique.security.review.repository.IUserRepository;
+import com.pacifique.security.review.security.AuthUser;
+import com.pacifique.security.review.security.UserDetailsServiceImpl;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.authorization.AuthorizationDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import static com.pacifique.security.review.utils.Utility.convertUserResponse;
+import static com.pacifique.security.review.utils.Utility.loginUserResponse;
+import static com.pacifique.security.review.utils.Utility.validTokeHandler;
+
+<span class="fc" id="L26">@Slf4j</span>
+@RequiredArgsConstructor
+@Service
+@Transactional
+public class AuthUserService implements IAuthUserService {
+
+    private final ITokenRepository tokenRepository;
+    private final IUserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final IJwtService jwtService;
+    private final UserDetailsServiceImpl userDetailsService;
+
+    @Override
+    public UserLoginResponse logInUser(UserLoginRequest req) {
+<span class="fc" id="L40">        AuthUser au = (AuthUser) userDetailsService.loadUserByUsername(req.username());</span>
+
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (!passwordEncoder.matches(req.password(), au.getPassword())) {</span>
+<span class="fc" id="L43">            throw new UserNotFound(&quot;Please check your username and password&quot;);</span>
+        }
+
+<span class="fc" id="L46">        var tk = tokenRepository.findByUserId(au.getId());</span>
+
+<span class="fc bfc" id="L48" title="All 4 branches covered.">        if (tk.isPresent() &amp;&amp; validTokeHandler(tk.get().getToken(), jwtService, au))</span>
+<span class="fc" id="L49">            return loginUserResponse(au, tk.get());</span>
+
+<span class="fc" id="L51">        tk.ifPresent(tokenRepository::delete);</span>
+<span class="fc" id="L52">        Token token = tokenRepository.save(Token.builder()</span>
+<span class="fc" id="L53">                .userId(au.getId())</span>
+<span class="fc" id="L54">                .token(jwtService.generateToken(au))</span>
+<span class="fc" id="L55">                .refreshToken(jwtService.generateRefreshToken(au)).build());</span>
+
+<span class="fc" id="L57">        log.info(&quot;loading a new token for user {}&quot;, au.getId());</span>
+<span class="fc" id="L58">        log.info(&quot;Access Token loaded: {}&quot;, token.getToken());</span>
+<span class="fc" id="L59">        return loginUserResponse(au, token);</span>
+    }
+
+
+    @Override
+    @PostAuthorize(&quot;returnObject.email == authentication.principal.username&quot;)
+    public UserResponse loggedInUser() {
+<span class="fc" id="L66">        String email = SecurityContextHolder.getContext().getAuthentication().getName();</span>
+<span class="pc bpc" id="L67" title="2 of 4 branches missed.">        if (email == null || email.equals(&quot;anonymousUser&quot;))</span>
+<span class="nc" id="L68">            throw new AuthorizationDeniedException(&quot;Please Login, and Try again&quot;);</span>
+
+<span class="fc" id="L70">        User user = userRepository.findByEmail(email).orElseThrow(()</span>
+<span class="fc" id="L71">                -&gt; new UserNotFound(&quot;User not found&quot;));</span>
+<span class="fc" id="L72">        return convertUserResponse().apply(user);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
